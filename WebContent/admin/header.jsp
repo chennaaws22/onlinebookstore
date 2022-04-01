@@ -1,8 +1,8 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
+
 <div align="center">
 	<div>
-		
 		<c:if test="${sessionScope.userLogedIn != null}">
 			Welcome 
 			 <c:out value="${sessionScope.userLogedIn}" />, 

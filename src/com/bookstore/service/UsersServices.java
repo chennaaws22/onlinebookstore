@@ -161,10 +161,11 @@ public class UsersServices {
 		if(isUserLogedIn) {
 			System.out.println("------user is loged correct");
 			this.request.getSession().setAttribute("userLogedIn", email);
+			
 			redirectTo("/admin/");
 		}else {
 			System.out.println("------user not loged correct");
-
+			
 			redirectToWithMessage("/admin/login_form.jsp", "user not loged in");
 		}
 	}

@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.bookstore.service.UsersServices;
@@ -36,19 +37,20 @@ public class AdminLoginFilter implements Filter {
 		boolean isLoginPage = httpServletReq.getRequestURI().endsWith("login_form.jsp");
 		
 		if(isLogedIn && (isLoginUri || isLoginPage )) {
+			System.out.println("User Aleardy logedin redirecting to admin dashboard");
 			RequestDispatcher rd = request.getRequestDispatcher("/admin/");
 			rd.forward(request, response);
 		}
 		else if(isLogedIn || isLoginUri) {
-			System.out.println("-----------User loged in");
+			System.out.println("----------- user loged in go to next filteration");
 			chain.doFilter(request, response);
 		} else {
-			System.out.println("-----------User Not loged in");
+			System.out.println("-----------User Not loged in redirecting to login page");
 			RequestDispatcher rd = request.getRequestDispatcher("/admin/login_form.jsp");
 			rd.forward(request, response);
  		}
 		
-		chain.doFilter(request, response);
+
 	}
 
 

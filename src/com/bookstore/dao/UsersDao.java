@@ -56,10 +56,10 @@ public class UsersDao extends JpaDao<Users> implements GenericDao<Users>{
 		Users user = super.findWithNamedQueryAndParam("Users.checkLogin", params);
 		
 		if(user != null) {
-			System.out.print("user found with correct password and email" + encryptedPassword);
+			System.out.println("user found with correct password and email" + encryptedPassword);
 			return true;	
 		}
-		System.out.print("user notfound with correct password and email" + encryptedPassword);
+		System.out.println("user not found with uncorrect password and email" + encryptedPassword);
 		return false;
 	}
 	
