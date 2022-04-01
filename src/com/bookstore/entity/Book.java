@@ -1,6 +1,7 @@
 package com.bookstore.entity;
 // Generated Feb 23, 2022 11:52:55 AM by Hibernate Tools 5.2.12.Final
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +19,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -45,6 +47,7 @@ public class Book implements java.io.Serializable {
 	private Date lastUpdateTime;
 	private Set<Review> reviews = new HashSet<Review>(0);
 	private Set<OrderDetail> orderDetails = new HashSet<OrderDetail>(0);
+	private String base64Image;
 
 	public Book() {
 	}
@@ -189,6 +192,16 @@ public class Book implements java.io.Serializable {
 
 	public void setOrderDetails(Set<OrderDetail> orderDetails) {
 		this.orderDetails = orderDetails;
+	}
+
+	@Transient
+	public String getBase64Image() {
+		return Base64.getEncoder().encodeToString(this.image);
+	}
+	
+	@Transient
+	public void setBase64Image(String base64Image) {
+		this.base64Image = base64Image;
 	}
 
 }

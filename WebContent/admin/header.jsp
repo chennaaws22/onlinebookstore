@@ -17,7 +17,7 @@
 		<b>
 			<a href="list_users">Users</a> |
 			<a href="list_categories">Categories</a> |
-			<a href="books">Books</a> |
+			<a href="list_book">Books</a> |
 			<a href="customers">Customers</a> |
 			<a href="reviews">reviews</a> |
 			<a href="orders">Orders</a> 
