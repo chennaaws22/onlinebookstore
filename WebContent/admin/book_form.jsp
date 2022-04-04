@@ -23,17 +23,17 @@
 			<h4 align="center">${message} </h4>
 		</c:if>
 			<c:if test="${book == null}">
-				<form action="create_book" method="post">
+				<form action="create_book" method="post" enctype="multipart/form-data">
 			</c:if>
 			<c:if test="${book != null}">
-				<form action="edit_book" method="post">
+				<form action="edit_book" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="bookId" value="${book.bookId}" />
 			</c:if>
 			
 				Title: <input type="text" name="bookTitle" size="20" value="${book.title}" />
 				<br>
 				Category:
-				<select name="categories">
+				<select name="category">
 					<c:forEach var="category" items="${categories}">
 						<option value="${category.categoryId}">${category.name}</option>
 					</c:forEach>

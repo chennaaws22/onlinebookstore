@@ -17,10 +17,11 @@
 - Junit4
 
 ## Features
-- Unitl Now these are the features done
+- Unitl Now these are the features done on the admin dashboard
 - ✅ Login to the admin dashboard.
-- ✅ Create, delete, list Users who manage the book store.
-- ✅ Create, delete, list Categories.
+- ✅ Create, delete,update and list Users who manage the book store.
+- ✅ Create, delete,update and list Categories.
+- ✅ Create and list Books.
 
 ## Acknowledgements
 - This project was based on [this tutorial](https://bit.ly/3NFR3ZC).
