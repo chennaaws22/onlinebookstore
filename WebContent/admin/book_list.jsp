@@ -13,7 +13,7 @@
 	<div align="center">
 	
 		<h2>Books Management</h2>
-		<a href="book_form.jsp">create new Book</a>
+		<a href="create_book">create new Book</a>
 	</div>
 	<br>
 	<c:if test="${message != null}">
