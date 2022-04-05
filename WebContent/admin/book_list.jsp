@@ -30,7 +30,7 @@
 				<th>Author</th>
 				<th>Category</th>
 				<th>Price</th>
-				<th>LastUpdated</th>
+				<th>PublishDate</th>
 				<th>Actions</th>	
 			</tr>
 			<c:forEach var="book" items="${books}" varStatus="status">
@@ -42,7 +42,7 @@
 					<td>${book.author}</td>
 					<td>${book.category.name}</td>
 					<td>${book.price}</td>
-					<td>${book.lastUpdateTime}</td>
+					<td>${book.publishDate}</td>
 					<td><a href="edit_book?bookId=${book.bookId}">Edit</a> 
 					  | <a href="delete_book?bookId=${book.bookId}" onClick="confirmDelete(${book.bookId})">Delete</a></td>
 				</tr>
@@ -55,7 +55,7 @@
 	<script>
 		function confirmDelete(bookId){
 			if(confirm(`Sure to delete book with id ` + bookId)){
-				window.location = "delete_book?userId=" + bookId;
+				window.location = "delete_book?bookId=" + bookId;
 			}
 		}
 	</script>

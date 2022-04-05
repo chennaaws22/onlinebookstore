@@ -2,6 +2,7 @@ package com.bookstore.controller.admin.book;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -11,16 +12,15 @@ import com.bookstore.controller.admin.BaseServlet;
 import com.bookstore.service.BookServices;
 
 
-@WebServlet("/admin/list_book")
-public class ListBookServlet extends BaseServlet {
+@WebServlet("/admin/update_book")
+@MultipartConfig
+public class UpdateBookServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
-  
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+      
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BookServices bookServices = new BookServices(entityManager, request, response);
-		bookServices.showBookTable();
+		bookServices.updateBook();
 	}
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
+
 }

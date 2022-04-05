@@ -10,17 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.bookstore.controller.admin.BaseServlet;
 import com.bookstore.service.BookServices;
 
-
-@WebServlet("/admin/list_book")
-public class ListBookServlet extends BaseServlet {
+@WebServlet("/admin/delete_book")
+public class DeleteBookServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
   
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BookServices bookServices = new BookServices(entityManager, request, response);
-		bookServices.showBookTable();
+		bookServices.deleteBook();
 	}
 	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
 }

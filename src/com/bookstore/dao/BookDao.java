@@ -44,8 +44,10 @@ public class BookDao extends JpaDao<Book> implements GenericDao<Book> {
 
 	public Book findByTitle(String title) {
 		return super.findWithNamedQueryAndParam("Book.findByTitle", "title", title);
-		
-		
+	}
+	
+	public Book findByIsbn(String isbn) {
+		return super.findWithNamedQueryAndParam("Book.findByIsbn", "isbn", isbn);
 	}
 	
 	@Override

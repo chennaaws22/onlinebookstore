@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -26,7 +26,7 @@
 				<form action="create_book" method="post" enctype="multipart/form-data">
 			</c:if>
 			<c:if test="${book != null}">
-				<form action="edit_book" method="post" enctype="multipart/form-data">
+				<form action="update_book" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="bookId" value="${book.bookId}" />
 			</c:if>
 			
@@ -35,23 +35,33 @@
 				Category:
 				<select name="category">
 					<c:forEach var="category" items="${categories}">
-						<option value="${category.categoryId}">${category.name}</option>
+						<c:if test="${category.categoryId eq book.category.categoryId}">
+							<option value="${category.categoryId}" selected>
+						</c:if>
+						
+						<c:if test="${category.categoryId ne book.category.categoryId}">
+							<option value="${category.categoryId}">
+						</c:if>
+							${category.name}
+						</option>
 					</c:forEach>
 				</select>
 				<br>
-				Author: <input type="text" name="bookAuthor" size="20" value="${book.title}" />
+				Author: <input type="text" name="bookAuthor" size="20" value="${book.author}" />
 				<br>
-				ISBN: <input type="text" name="bookIsbn" size="20" value="${book.title}" />
+				ISBN: <input type="text" name="bookIsbn" size="20" value="${book.isbn}" />
 				<br>
-				publish Date: <input type="date" name="bookDate" value="2022-04-1" value="${book.publishDate}" />
+				publish Date: <input type="date" name="bookDate" 
+				value="<fmt:formatDate pattern='yyyy-MM-dd' value='${book.publishDate}' />" />
 				<br>
 				Book Image: <input type="file" name="bookImage" id="bookImage" size="20" /><br>
-				<img width="80px" height="120pxs" id="thumbnail"  alt="thumbnail"/>
+				<img width="80px" height="120pxs" id="thumbnail"  alt="thumbnail"
+						src="data:image/jpg;base64,${book.base64Image}"/>
 				<br>
 				Price: <input type="text" name="bookPrice" size="20" value="${book.price}" />
 				<br>
 				Description: 
-				<textarea rows="5" cols="50" name="description" id="description"></textarea>
+				<textarea rows="5" cols="50" name="description" id="description">${book.description}</textarea>
 				<br><br>
 				<c:if test="${book != null}">
 					<input type="submit" value="Update">

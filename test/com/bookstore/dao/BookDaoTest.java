@@ -47,6 +47,14 @@ public class BookDaoTest extends BaseDaoTest {
 		assertEquals(book.getTitle(), title);
 	}
 	
+	
+	@Test
+	public void testFindBookByIsbn() {
+		String isbn = "161729120X";
+		Book book = bookDao.findByIsbn(isbn);
+		System.out.println(book.getTitle());
+		assertEquals(book.getIsbn(), isbn);
+	}
 	@Test
 	public void testGetBook() {
 		Integer bookId = 39;
