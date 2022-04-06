@@ -31,7 +31,9 @@ import javax.persistence.UniqueConstraint;
 		@NamedQuery(name = "Book.findAll", query = "SELECT b FROM Book b"),
 		@NamedQuery(name = "Book.findByTitle", query = "SELECT b FROM Book b WHERE b.title = :title"),
 		@NamedQuery(name = "Book.countAll", query = "SELECT count(*) FROM Book b"),
-		@NamedQuery(name = "Book.findByIsbn", query = "SELECT b FROM Book b WHERE b.isbn = :isbn")
+		@NamedQuery(name = "Book.findByIsbn", query = "SELECT b FROM Book b WHERE b.isbn = :isbn"),
+		@NamedQuery(name= "Book.findByCategory", query = "SELECT b from Book b JOIN Category c "
+				+ "ON b.category.categoryId = c.categoryId WHERE b.category.categoryId = :catId")
 		})
 
 public class Book implements java.io.Serializable {

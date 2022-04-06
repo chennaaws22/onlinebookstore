@@ -91,7 +91,17 @@ public class JpaDao<E>{
 		}
 		return null;
 	}
-	
+	public List<E> findWithNamedQueryAndParamList(String namedQuery, String param, Object paramValue){
+		Query query = this.entityManager.createNamedQuery(namedQuery);
+		query.setParameter(param, paramValue);
+		
+		List<E> entities = query.getResultList();
+		System.out.println("from JpaDao -> " + entities.size());
+		if(entities != null && entities.size() > 0) {
+			return entities;
+		}
+		return null;
+	}
 	public E findWithNamedQueryAndParam(String namedQuery, Map<String, Object> params){
 		Query query = this.entityManager.createNamedQuery(namedQuery);
 		Set<Entry<String, Object>> paramEntries = params.entrySet();

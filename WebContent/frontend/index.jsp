@@ -8,7 +8,6 @@
 </head>
 <body>	
 	<h1>Welcome to Servlet Home Page!</h1>
-	<a href="admin/">Admin</a>
 	<jsp:directive.include file="header.jsp"/>
 	
 	

@@ -69,8 +69,8 @@ public class BookServices {
 		this.readRequestFields(newBook);
 		
 		bookDao.create(newBook);
-		redirectToWithMessage("list_book", "Book added scuccessfully");
-
+		this.request.setAttribute("message", "book added successfully");
+		showBookTable();
 	}
 	
 	public void showEditBookForm() throws ServletException, IOException {
@@ -195,5 +195,21 @@ public class BookServices {
 		this.request.setAttribute("message", message);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
 		requestDispatcher.forward(this.request, this.response);
+	}
+
+	public void listBooksByCategory() throws ServletException, IOException {
+		int catId = Integer.parseInt(this.request.getParameter("categoryId"));
+		List<Book> books = bookDao.findByCategory(catId);
+		System.out.println(books.get(0).getTitle());
+		List<Category> categories = categoryDao.listAll();
+		System.out.println(categories.get(0).getName());
+		Category category = categoryDao.get(catId);
+		System.out.println(category.getName());
+		this.request.setAttribute("books", books);
+		this.request.setAttribute("categories", categories);
+		this.request.setAttribute("category", category);
+		System.out.println("Redirecting to book viw category");
+		redirectTo("frontend/book_view_by_category.jsp");
+
 	}
 }

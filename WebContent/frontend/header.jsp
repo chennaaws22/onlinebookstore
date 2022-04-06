@@ -1,7 +1,6 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
 
 <div align="center">
-	<div>Welcome ADMIN, | <a href="#">Logout</a><br><br></div>
 	<div>
 		<input type="text" name="keyword" size="50" />
 		<input type="button" value="Search" />

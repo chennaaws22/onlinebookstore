@@ -49,6 +49,22 @@ public class BookDaoTest extends BaseDaoTest {
 	
 	
 	@Test
+	public void testFindByCategory() {
+		int catId = 16;
+		
+		List<Book> books = bookDao.findByCategory(catId);
+		System.out.println(books.get(0).getTitle());
+		assertTrue(books.size() > 0);
+	}
+	
+	@Test
+	public void testNoFoundBooksByCategory() {
+		int catId = 17;
+		
+		List<Book> books = bookDao.findByCategory(catId);
+		assertTrue(books.size() > 0);
+	}
+	@Test
 	public void testFindBookByIsbn() {
 		String isbn = "161729120X";
 		Book book = bookDao.findByIsbn(isbn);
