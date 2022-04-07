@@ -199,17 +199,23 @@ public class BookServices {
 
 	public void listBooksByCategory() throws ServletException, IOException {
 		int catId = Integer.parseInt(this.request.getParameter("categoryId"));
-		List<Book> books = bookDao.findByCategory(catId);
-		System.out.println(books.get(0).getTitle());
-		List<Category> categories = categoryDao.listAll();
-		System.out.println(categories.get(0).getName());
 		Category category = categoryDao.get(catId);
-		System.out.println(category.getName());
-		this.request.setAttribute("books", books);
-		this.request.setAttribute("categories", categories);
-		this.request.setAttribute("category", category);
-		System.out.println("Redirecting to book viw category");
-		redirectTo("frontend/book_view_by_category.jsp");
+		if(category != null) {
+			List<Book> books = bookDao.findByCategory(catId);
+			System.out.println(books.get(0).getTitle());
+			List<Category> categories = categoryDao.listAll();
+			System.out.println(categories.get(0).getName());
+			
+			System.out.println(category.getName());
+			this.request.setAttribute("books", books);
+			this.request.setAttribute("categories", categories);
+			this.request.setAttribute("category", category);
+			System.out.println("Redirecting to book viw category");
+			redirectTo("frontend/book_view_by_category.jsp");
+		} else {
+			redirectToWithMessage("/", "Sorry, the category ID " + catId + " is not available.");
+		}
+		
 
 	}
 }

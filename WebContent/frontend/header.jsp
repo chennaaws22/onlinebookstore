@@ -14,7 +14,7 @@
 	<br>
 	<div>
 	<b>
-		Categories: &nbsp
+		
 		<c:forEach var="category" items="${categories}" varStatus="status">
 			<a href="view_category?categoryId=${category.categoryId}"><c:out value="${category.name}" /></a>
 			<c:if test="${!status.last}" >

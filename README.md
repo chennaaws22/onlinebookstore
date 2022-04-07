@@ -28,7 +28,8 @@
 - ✅ Create, delete, update and list Categories.
 - ✅ Create, delete, update and list Books with it's book image displayed.
 - 🧑 for website visitor
-- ✅ Display Books By Category.
+- ✅ Display books by category.
+- ✅ Display new published books on the home page.
 
 
 ## Acknowledgements

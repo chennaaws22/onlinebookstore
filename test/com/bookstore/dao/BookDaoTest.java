@@ -34,9 +34,16 @@ public class BookDaoTest extends BaseDaoTest {
 	}
 	
 	@Test
-	public void TestCountAll() {
+	public void testCountAll() {
 		long counts = bookDao.count();
 		assertTrue(counts == 1);
+	}
+	
+	@Test
+	public void testListNewBooks() {
+		List<Book> books = bookDao.listNewBooks();
+		
+		assertEquals(4, books.size());
 	}
 	
 	@Test
@@ -46,6 +53,8 @@ public class BookDaoTest extends BaseDaoTest {
 		
 		assertEquals(book.getTitle(), title);
 	}
+	
+	
 	
 	
 	@Test

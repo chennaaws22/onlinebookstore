@@ -65,6 +65,14 @@ public class JpaDao<E>{
 	}
 	
 	
+	public List<E> findWithNamedQueryLimit(String namedQuery, int limit){
+		Query query = this.entityManager.createNamedQuery(namedQuery);
+		query.setFirstResult(0);
+		query.setMaxResults(4);
+		List<E> entities = query.getResultList();
+		
+		return entities;
+	}
 	
 	public E findByEmailQuery(String email) {
 		Query query = this.entityManager.createNamedQuery("Users.findByEmail");
