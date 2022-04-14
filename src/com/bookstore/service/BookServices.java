@@ -218,4 +218,19 @@ public class BookServices {
 		
 
 	}
+
+	public void viewBook() throws ServletException, IOException {
+		int bookId = Integer.parseInt(this.request.getParameter("book_id"));
+		System.out.println("book id --------> " + bookId);
+		Book book = bookDao.get(bookId);
+		if(book != null) {
+			this.request.setAttribute("book", book);
+			
+		}else {
+			String message = "Sorry, the book with ID " + bookId + " is not available.";
+			this.request.setAttribute("message", message);
+		}
+			
+		redirectTo("frontend/book_view.jsp");
+	}
 }

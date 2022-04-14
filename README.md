@@ -30,6 +30,7 @@
 - 🧑 for website visitor
 - ✅ Display books by category.
 - ✅ Display new published books on the home page.
+- ✅ Display a certain book details.
 
 
 ## Acknowledgements

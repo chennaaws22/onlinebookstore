@@ -10,24 +10,26 @@
 </head>
 <body>	
 	<jsp:directive.include file="header.jsp"/>
-	
-		<h1>${category.name} Books</h1>
+		
 		<div align="center">
-			<c:forEach var="book" items="${books}" varStatus="status">
+			<c:if test="${message != null}">
+				<h4 style="color:red;" align="center">${message}</h4>
+			</c:if>
 				<div style="float:left;display:inline-block">
-				<a href="view_book?book_id=${book.bookId}">
-					<img src="data:image/jpg;base64,${book.base64Image}" width="80" height="120"/>
+				
+					<img src="data:image/jpg;base64,${book.base64Image}" width="20%" height="30%"/>
 					<br><br>
-				</a>
-				<a href="view_book?book_id=${book.bookId}">
-					${book.title}
-				</a>
+			
+					<b>${book.title}</b>
+			
+					<br>
+					<p>${book.description}</p>
 					<br>
 				
 					<fmt:setLocale value = "en_us"/>
 					<b><fmt:formatNumber value = "${book.price}" type = "currency"/></b>
 				</div>
-			</c:forEach>	
+				
 		</div>
 </body>
 </html>
