@@ -119,6 +119,21 @@ public class BookDaoTest extends BaseDaoTest {
 		
 	}
 	
+	@Test
+	public void testSearchAuthor() {
+		String keyword = "Joshua";
+		List<Book> books = bookDao.search(keyword);
+		assertEquals(1, books.size());
+	}
+	
+	@Test 
+	public void testSearchBook() {
+		String keyword = "Java";
+		List<Book> books = bookDao.search(keyword);
+		assertEquals(4, books.size());
+		
+	}
+	
 	
 	@Test
 	public void testCreateBook() throws IOException, ParseException {

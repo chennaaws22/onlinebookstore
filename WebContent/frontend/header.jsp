@@ -2,8 +2,11 @@
 
 <div align="center">
 	<div>
-		<input type="text" name="keyword" size="50" />
-		<input type="button" value="Search" />
+	
+		<form action="search" method="get">
+			<input type="text" name="keyword" size="50" />
+			<input type="submit" value="Search" />
+		</form>
 		&nbsp&nbsp&nbsp&nbsp
 		<b>
 			<a href="#">sign In</a> |

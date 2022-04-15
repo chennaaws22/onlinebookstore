@@ -10,6 +10,7 @@
 </head>
 <body>	
 	<h1 align="center">Welcome to Book Store Home Page!</h1>
+	
 	<jsp:directive.include file="header.jsp"/><br>
 	<c:if test="${message != null}">
 		<h4 align="center">${message}</h4>

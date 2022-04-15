@@ -233,4 +233,17 @@ public class BookServices {
 			
 		redirectTo("frontend/book_view.jsp");
 	}
+
+	public void search() throws ServletException, IOException {
+		String keyword = this.request.getParameter("keyword");
+		List<Book> books = null;
+		if(keyword.equals("")) {
+			books = bookDao.listAll();
+		}else {
+			books = bookDao.search(keyword);
+		}
+		this.request.setAttribute("keyword", keyword);
+		this.request.setAttribute("books", books);
+		redirectTo("frontend/book_search_page.jsp");
+	}
 }
