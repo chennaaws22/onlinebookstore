@@ -14,7 +14,11 @@ import com.bookstore.service.BookServices;
 @WebServlet("/admin/list_book")
 public class ListBookServlet extends BaseServlet {
 	private static final long serialVersionUID = 1L;
-  
+	 public ListBookServlet() {
+	        super();
+	        System.out.println("############ created object listbookservlet ##########");
+	    }
+
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		BookServices bookServices = new BookServices(entityManager, request, response);
 		bookServices.showBookTable();

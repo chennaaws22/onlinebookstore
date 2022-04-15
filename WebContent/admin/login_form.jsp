@@ -18,7 +18,7 @@
 				</c:if>
 				<h3>Admin Login</h3>
 
-				<form action="login" method="post">
+				<form action="admin/login" method="post">
 					Email: &nbsp; &nbsp;&nbsp;&nbsp;&nbsp;   <input type="text" name="email" size="20" />
 					<br><br>
 					Password:&nbsp;  <input type="password" name="password" size="20"  />
