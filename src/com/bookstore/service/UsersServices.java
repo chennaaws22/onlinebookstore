@@ -17,6 +17,8 @@ import com.bookstore.entity.Users;
 
 public class UsersServices {
 	private static UsersDao usersDao ;
+	private RedirectingServices redirectingServices;
+
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	
@@ -26,7 +28,8 @@ public class UsersServices {
 		
 		
 		usersDao = new UsersDao();
-		
+		redirectingServices = new RedirectingServices(this.request, this.response);
+
 	}
 	
 	public List<Users> listAll(){
@@ -40,11 +43,7 @@ public class UsersServices {
 		request.setAttribute("users", users);
 		
 		String listPage = "../admin/users_list.jsp";
-		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);
-		
-		
-		requestDispatcher.forward(request, response);
+		redirectingServices.redirectTo(listPage);
 	}
 	
 	public Users createUser (String email, String fullName, String password) {
@@ -59,9 +58,7 @@ public class UsersServices {
 		String password = request.getParameter("password");
 		
 		if(usersDao.findByEmail(email) != null) {
-			request.setAttribute("message", "User Email " + email + " Already Exist!");
-			RequestDispatcher rd = request.getRequestDispatcher("message.jsp");
-			rd.forward(request, response);
+			redirectingServices.showErrorPage("User Email " + email + " Already Exist!");
 			
 		}else {
 			this.createUser(email, fullName, password);
@@ -78,9 +75,8 @@ public class UsersServices {
 				request.setAttribute("user", user);
 				rd.forward(this.request, this.response);
 			}else {
-				this.request.setAttribute("message", "User not found!");
-				RequestDispatcher rd = this.request.getRequestDispatcher("/admin/message.jsp");
-				rd.forward(this.request, this.response);
+				redirectingServices.showErrorPage("User not found!");
+
 			}
 			
 		}
@@ -99,7 +95,7 @@ public class UsersServices {
 		//check if there is another user with the same email
 		if(userByEmail != null && userByEmail.getUserId() != userById.getUserId()) {
 			String message = "Could not update user with this email!";
-			redirectToWithMessage("/admin/message.jsp", message);
+			redirectingServices.showErrorPage(message);
 		}else {
 			userById.setEmail(email);
 			userById.setFullName(fullName);
@@ -110,13 +106,13 @@ public class UsersServices {
 			}
 			usersDao.update(userById);
 			request.setAttribute("message", "user successfullty updated");
+			showUsersListTable();
 		}
 		
 	}
 	
 	public void deleteUser() throws ServletException, IOException {
 		Integer userId = Integer.parseInt(request.getParameter("userId"));
-		
 		
 		if(userId == 1) {
 			RequestDispatcher rd = this.request.getRequestDispatcher("/admin/message.jsp");
@@ -138,11 +134,11 @@ public class UsersServices {
 	}
 	
 	public void showLoginForm() throws ServletException, IOException {
-		redirectTo("/admin/login_form.jsp");
+		redirectingServices.redirectTo("/admin/login_form.jsp");
 	}
 	
 	public void showLoginFormWithMessage(String message) throws ServletException, IOException {
-		redirectToWithMessage("/admin/login_form.jsp", message);
+		redirectingServices.redirectToWithMessage("/admin/login_form.jsp", message);
 	}
 
 	public void loginUser() throws ServletException, IOException {
@@ -155,22 +151,13 @@ public class UsersServices {
 			System.out.println("------user is loged correct");
 			this.request.getSession().setAttribute("userLogedIn", email);
 			
-			redirectTo("/admin/");
+			redirectingServices.redirectTo("/admin/");
 		}else {
 			System.out.println("------user not loged correct");
 			
-			redirectToWithMessage("/admin/login_form.jsp", "user not loged in");
+			redirectingServices.redirectToWithMessage("/admin/login_form.jsp", "user not loged in");
 		}
 	}
 		
-	private void redirectTo(String pageName) throws ServletException, IOException {
-		RequestDispatcher rd = this.request.getRequestDispatcher(pageName);
-		rd.forward(this.request, this.response);
-	}
-	
-	private void redirectToWithMessage(String pageName, String message) throws ServletException, IOException {
-		RequestDispatcher rd = this.request.getRequestDispatcher(pageName);
-		this.request.setAttribute("message", message);
-		rd.forward(this.request, this.response);
-	}
+
 }

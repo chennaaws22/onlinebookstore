@@ -27,7 +27,7 @@ public class EditUserServlet extends HttpServlet {
 		
 		UsersServices userServices = new UsersServices(request, response);
 		userServices.editUser();
-		userServices.showUsersListTable();
+		
 	}	
 
 }

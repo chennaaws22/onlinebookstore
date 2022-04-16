@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.function.Consumer;
 
 import javax.persistence.EntityManager;
 import javax.servlet.RequestDispatcher;
@@ -22,6 +23,7 @@ import com.bookstore.entity.Category;
 
 public class BookServices {
 	private BookDao bookDao;
+	private RedirectingServices redirectingServices;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private CategoryDao categoryDao;
@@ -32,6 +34,8 @@ public class BookServices {
 		
 		bookDao = new BookDao();
 		categoryDao = new CategoryDao();
+		redirectingServices = new RedirectingServices(this.request, this.response);
+		
 	}
 	
 	public List<Book> listBooks() {
@@ -44,24 +48,20 @@ public class BookServices {
 		
 		String listPage = "book_list.jsp";
 		
-		this.redirectTo(listPage);
+		redirectingServices.redirectTo(listPage);
 	}
 	
 	public void showBookForm() throws ServletException, IOException {
 		System.out.println("show book form function");
-		List<Category> categories = categoryDao.listAll();
-		this.request.setAttribute("categories", categories);
-		
-		System.out.println(categories.get(0).toString());
 		
 		System.out.println("redirecting to book form");
 		
 		String bookFormPage = "../admin/book_form.jsp";
-		redirectTo(bookFormPage);
+		redirectingServices.redirectTo(bookFormPage);
+
 	}
 	
 	public void createBook() throws IOException, ServletException {
-		
 		Book newBook = new Book();
 		this.readRequestFields(newBook);
 		
@@ -73,15 +73,13 @@ public class BookServices {
 	public void showEditBookForm() throws ServletException, IOException {
 		int bookId = Integer.parseInt(this.request.getParameter("bookId"));
 		Book book = bookDao.get(bookId);
-		
+		List<Category> categories = categoryDao.listAll();
+		this.request.setAttribute("categories", categories);
 		this.request.setAttribute("book", book);
-		List<Category> catgories = categoryDao.listAll();
-		this.request.setAttribute("categories", catgories);
 		System.out.println("------------------reirecting to book_form");
-		
-		redirectTo("book_form.jsp");
+		redirectingServices.redirectTo("book_form.jsp");
+
 	}
-	
 	
 	public void updateBook() throws IOException, ServletException {
 		int bookId = Integer.parseInt(this.request.getParameter("bookId"));
@@ -98,11 +96,13 @@ public class BookServices {
 		}
 		else if(bookByIsbn != null && bookByIsbn.getBookId() != existingBook.getBookId() && bookByIsbn.getIsbn().equals(isbn)) {
 			System.out.println("couldn't update cook with this isbn");
-			redirectToWithMessage("edit_book?bookId=" + bookId, "there is a book with same isbn try different one");
-		}else {
+			redirectingServices.redirectToWithMessage("edit_book?bookId=" + bookId, 
+					"there is a book with same isbn try different one");
+
+		} else {
 			this.readRequestFields(existingBook);		
 			bookDao.update(existingBook);
-			redirectToWithMessage("list_book", "Book Updated Successfully");
+			redirectingServices.redirectToWithMessage("list_book", "Book Updated Successfully");
 		}
 		
 		
@@ -162,7 +162,6 @@ public class BookServices {
 			showBookTable();
 		}
 		
-		
 		this.request.setAttribute("message", "Book Deleted Successfully");
 		showBookTable();
 	}
@@ -183,34 +182,22 @@ public class BookServices {
 	}
 	
 	
-	private void redirectTo(String page) throws ServletException, IOException {
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
-		requestDispatcher.forward(this.request, this.response);
-	}
 	
-	private void redirectToWithMessage(String page, String message) throws ServletException, IOException {
-		this.request.setAttribute("message", message);
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(page);
-		requestDispatcher.forward(this.request, this.response);
-	}
 
 	public void listBooksByCategory() throws ServletException, IOException {
 		int catId = Integer.parseInt(this.request.getParameter("categoryId"));
 		Category category = categoryDao.get(catId);
 		if(category != null) {
 			List<Book> books = bookDao.findByCategory(catId);
-			System.out.println(books.get(0).getTitle());
-			List<Category> categories = categoryDao.listAll();
-			System.out.println(categories.get(0).getName());
-			
-			System.out.println(category.getName());
-			this.request.setAttribute("books", books);
-			this.request.setAttribute("categories", categories);
-			this.request.setAttribute("category", category);
-			System.out.println("Redirecting to book viw category");
-			redirectTo("frontend/book_view_by_category.jsp");
+			if(books != null) {
+				this.request.setAttribute("books", books);
+				this.request.setAttribute("category", category);
+				System.out.println("Redirecting to book viw category");
+				redirectingServices.redirectTo("frontend/book_view_by_category.jsp");
+			}
 		} else {
-			redirectToWithMessage("/", "Sorry, the category ID " + catId + " is not available.");
+			redirectingServices.redirectToWithMessage("/",
+					"Sorry, the category ID " + catId + " is not available.");
 		}
 		
 
@@ -228,7 +215,7 @@ public class BookServices {
 			this.request.setAttribute("message", message);
 		}
 			
-		redirectTo("frontend/book_view.jsp");
+		redirectingServices.redirectTo("frontend/book_view.jsp");
 	}
 
 	public void search() throws ServletException, IOException {
@@ -241,6 +228,8 @@ public class BookServices {
 		}
 		this.request.setAttribute("keyword", keyword);
 		this.request.setAttribute("books", books);
-		redirectTo("frontend/book_search_page.jsp");
+		redirectingServices.redirectTo("frontend/book_search_page.jsp");
 	}
+	
+	
 }

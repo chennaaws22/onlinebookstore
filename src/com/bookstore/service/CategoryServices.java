@@ -14,6 +14,7 @@ import com.bookstore.entity.Category;
 
 public class CategoryServices {
 	private CategoryDao categoryDao;
+	private RedirectingServices redirectingServices;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 
@@ -21,6 +22,7 @@ public class CategoryServices {
 		this.request = request;
 		this.response = response;
 		categoryDao = new CategoryDao();
+		redirectingServices = new RedirectingServices(this.request, this.response);
 	}
 	
 	
@@ -35,18 +37,14 @@ public class CategoryServices {
 		
 		String listPage = "../admin/category_list.jsp";
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);
-
-		requestDispatcher.forward(request, response);
+		redirectingServices.redirectTo(listPage);
 	}
 	
 	
 	public void showCategoryForm() throws ServletException, IOException {
 		String createCategoryPage = "../admin/category_form.jsp";
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(createCategoryPage);
-		
-		requestDispatcher.forward(request, response);
+		redirectingServices.redirectTo(createCategoryPage);
 	}
 	
 	public void createCategory() throws ServletException, IOException {
@@ -74,7 +72,7 @@ public class CategoryServices {
 			this.showCategoryForm();
 		} else {
 			
-			this.showErrorPage("there is no category with this Id");
+			redirectingServices.showErrorPage("there is no category with this Id");
 		}
 	}
 	
@@ -86,7 +84,7 @@ public class CategoryServices {
 		Category categoryByName = categoryDao.findByName(categoryName);
 		
 		if(categoryByName != null && categoryByName.getCategoryId() != categoryById.getCategoryId()) {
-			showErrorPage("this category Name already exist. try with different one");
+			redirectingServices.showErrorPage("this category Name already exist. try with different one");
 		} else {
 			categoryById.setName(categoryName);
 			categoryDao.Update(categoryById);
@@ -95,12 +93,6 @@ public class CategoryServices {
 		}
 	}
 	
-	public void showErrorPage(String message) throws ServletException, IOException {
-		request.setAttribute("message", message);
-		RequestDispatcher rd = request.getRequestDispatcher("message.jsp");
-		rd.forward(request, response);
-		
-	}
 
 	public void deleteCategory() throws ServletException, IOException {
 		Integer categoryId = Integer.parseInt(request.getParameter("categoryId"));
@@ -110,7 +102,7 @@ public class CategoryServices {
 			this.request.setAttribute("message", "category deleted successfully");
 			showCategoryTable();
 		}else {
-			showErrorPage("There is no category with this Id to delete");
+			redirectingServices.showErrorPage("There is no category with this Id to delete");
 		}
 	}
 	
