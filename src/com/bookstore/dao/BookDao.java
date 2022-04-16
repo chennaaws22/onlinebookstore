@@ -9,9 +9,8 @@ import com.bookstore.entity.Book;
 
 
 public class BookDao extends JpaDao<Book> implements GenericDao<Book> {
-	
-	public BookDao(EntityManager entityManager) {
-		super(entityManager);
+		public BookDao() {
+			super();
 		
 	}
 	

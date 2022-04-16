@@ -21,14 +21,13 @@ public class UsersDaoTest {
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		BaseDaoTest.setUpBeforeClass();
-		usersDao = new UsersDao(BaseDaoTest.entityManager);
+		usersDao = new UsersDao();
 		
 	}
 
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		BaseDaoTest.tearDownAfterClass();
+		usersDao.close();
 	}
 
 	@Test

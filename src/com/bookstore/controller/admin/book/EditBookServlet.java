@@ -8,18 +8,17 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bookstore.controller.admin.BaseServlet;
 import com.bookstore.service.BookServices;
 
 
 @WebServlet("/admin/edit_book")
 @MultipartConfig
-public class EditBookServlet extends BaseServlet {
+public class EditBookServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
  
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		BookServices bookServices = new BookServices(entityManager, request, response);
+		BookServices bookServices = new BookServices(request, response);
 		
 		bookServices.showEditBookForm();
 	}

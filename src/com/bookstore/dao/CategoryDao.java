@@ -8,8 +8,8 @@ import com.bookstore.entity.Category;
 
 public class CategoryDao extends JpaDao<Category> implements GenericDao<Category> {
 
-	public CategoryDao(EntityManager entityManager) {
-		super(entityManager);
+	public CategoryDao() {
+		super();
 	}
 	
 	

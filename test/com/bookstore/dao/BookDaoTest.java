@@ -18,19 +18,18 @@ import javax.persistence.*;
 import com.bookstore.entity.Book;
 import com.bookstore.entity.Category;
 
-public class BookDaoTest extends BaseDaoTest {
+public class BookDaoTest{
 	private static BookDao bookDao;
 	
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		BaseDaoTest.setUpBeforeClass();
-		bookDao = new BookDao(BaseDaoTest.entityManager);
+		bookDao = new BookDao();
 		
 	}
 	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		BaseDaoTest.tearDownAfterClass();
+		bookDao.close();
 	}
 	
 	@Test

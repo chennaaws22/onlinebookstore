@@ -21,20 +21,17 @@ import com.bookstore.entity.Book;
 import com.bookstore.entity.Category;
 
 public class BookServices {
-	private EntityManager entityManager;
 	private BookDao bookDao;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
 	private CategoryDao categoryDao;
-	public BookServices(EntityManager entityManager, 
-			HttpServletRequest request, HttpServletResponse response) {
+	public BookServices(HttpServletRequest request, HttpServletResponse response) {
 		this.request = request;
 		this.response = response;
-		this.entityManager = entityManager;
 
 		
-		bookDao = new BookDao(entityManager);
-		categoryDao = new CategoryDao(entityManager);
+		bookDao = new BookDao();
+		categoryDao = new CategoryDao();
 	}
 	
 	public List<Book> listBooks() {

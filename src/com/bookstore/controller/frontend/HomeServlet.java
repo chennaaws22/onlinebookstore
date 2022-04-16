@@ -10,7 +10,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.bookstore.controller.admin.BaseServlet;
 import com.bookstore.dao.BookDao;
 import com.bookstore.dao.CategoryDao;
 import com.bookstore.entity.Book;
@@ -20,7 +19,7 @@ import com.bookstore.entity.Category;
 
 
 @WebServlet("/")
-public class HomeServlet extends BaseServlet {
+public class HomeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
    
@@ -32,8 +31,8 @@ public class HomeServlet extends BaseServlet {
 
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		CategoryDao categoryDao = new CategoryDao(entityManager);
-		BookDao bookDao = new BookDao(entityManager);
+		CategoryDao categoryDao = new CategoryDao();
+		BookDao bookDao = new BookDao();
 		List<Category> categories = categoryDao.listAll();
 		List<Book> newBooks = bookDao.listNewBooks();
 		request.setAttribute("categories", categories);

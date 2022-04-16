@@ -16,7 +16,6 @@ import com.bookstore.dao.UsersDao;
 import com.bookstore.entity.Users;
 
 public class UsersServices {
-	private  EntityManager entityManager;
 	private static UsersDao usersDao ;
 	private HttpServletRequest request;
 	private HttpServletResponse response;
@@ -24,15 +23,9 @@ public class UsersServices {
 	public UsersServices(HttpServletRequest request, HttpServletResponse response) {
 		this.request = request;
 		this.response = response;
-	}
-	
-	public UsersServices(EntityManager entityManager, 
-			HttpServletRequest request, HttpServletResponse response) {
-		this.request = request;
-		this.response = response;
-		this.entityManager = entityManager;
 		
-		usersDao = new UsersDao(this.entityManager);
+		
+		usersDao = new UsersDao();
 		
 	}
 	

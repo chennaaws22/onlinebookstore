@@ -17,15 +17,12 @@ public class CategoryDaoTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		
-		BaseDaoTest.setUpBeforeClass();
-		
-		categoryDao = new CategoryDao(BaseDaoTest.entityManager);
+		categoryDao = new CategoryDao();
 	}	
 	
 	@AfterClass
 	public static void tearDownAfterClass() throws Exception {
-		BaseDaoTest.tearDownAfterClass();
+		categoryDao.close();
 	}
 	
 	

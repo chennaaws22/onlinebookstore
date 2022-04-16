@@ -9,11 +9,8 @@ import javax.persistence.EntityManager;
 import com.bookstore.entity.Users;
 
 public class UsersDao extends JpaDao<Users> implements GenericDao<Users>{
-	
-	
-	
-	public UsersDao(EntityManager entityManager) {
-		super(entityManager);
+	public UsersDao() {
+		super();
 		
 	}
 	
