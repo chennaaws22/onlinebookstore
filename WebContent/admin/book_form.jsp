@@ -7,8 +7,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Book Form</title>
+<link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="../css/richtext.min.css">
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
 	<jsp:directive.include file="header.jsp"/>
@@ -61,7 +62,7 @@
 				Price: <input type="text" name="bookPrice" size="20" value="${book.price}" />
 				<br>
 				Description: 
-				<textarea rows="5" cols="50" name="description" id="description">${book.description}</textarea>
+				<textarea class="content" rows="5" cols="50" name="description" id="description">${book.description}</textarea>
 				<br><br>
 				<c:if test="${book != null}">
 					<input type="submit" value="Update">
@@ -76,16 +77,19 @@
 	<br><br>
 	
 	<jsp:directive.include file="footer.jsp"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="../js/jquery.richtext.min.js"></script>
 	
-	
-</body>
-<script>
+</body>	
+<script type="text/javascript">
 		$(document).ready(function(){
 			$('#bookImage').change(function(){
 				showImageThumbnail(this);
 			});
+			
+			$('#description').richText();
 		});
-	
+		
 		function showImageThumbnail(fileInput){
 			var file = fileInput.files[0];
 			

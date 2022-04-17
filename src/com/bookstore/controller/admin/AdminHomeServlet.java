@@ -17,11 +17,9 @@ public class AdminHomeServlet extends HttpServlet {
 
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String listPage = "../admin/index.jsp";
+		String home = "../admin/index.jsp";
 		
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher(listPage);
-		
-		requestDispatcher.forward(request, response);
+		response.sendRedirect(request.getContextPath() + home);
 		
 	}
     

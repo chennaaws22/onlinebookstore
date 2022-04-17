@@ -134,7 +134,8 @@ public class UsersServices {
 	}
 	
 	public void showLoginForm() throws ServletException, IOException {
-		redirectingServices.redirectTo("/admin/login_form.jsp");
+		response.sendRedirect(request.getContextPath() + "/admin/login_form.jsp");
+//		redirectingServices.redirectTo("/admin/login_form.jsp");
 	}
 	
 	public void showLoginFormWithMessage(String message) throws ServletException, IOException {

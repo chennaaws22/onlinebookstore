@@ -187,4 +187,12 @@ public class BookDaoTest{
 		assertEquals(book.getCategory().getName(), updatedBook.getCategory().getName());
 		
 	}
+	
+	@Test
+	public void TestCountByCategory() {
+		long booksCount = bookDao.countByCategory(12);
+		
+		assertEquals(booksCount, 3);
+		
+	}
 }

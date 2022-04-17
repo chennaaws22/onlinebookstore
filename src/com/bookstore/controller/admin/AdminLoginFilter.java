@@ -10,6 +10,7 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 
@@ -25,20 +26,22 @@ public class AdminLoginFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		System.out.println("-----------Filtering-----------");
 		HttpServletRequest httpServletReq = (HttpServletRequest) request;
+		HttpServletResponse httpServletRes = (HttpServletResponse) response;
 		HttpSession httpSession = httpServletReq.getSession(false);
 		
 		boolean isLogedIn = httpSession != null && httpSession.getAttribute("userLogedIn") !=null;
 		
-		String loginUri = httpServletReq.getContextPath() + "/admin/login";
+		String contextPath = httpServletReq.getContextPath();
+		String loginUri = contextPath + "/admin/login";
 		boolean isLoginUri = httpServletReq.getRequestURI().equals(loginUri);
 		boolean isLoginPage = httpServletReq.getRequestURI().endsWith("login_form.jsp");
 		
-		if(isLogedIn && (isLoginUri || isLoginPage )) {
+		if(isLogedIn && (isLoginUri || isLoginPage)) {
 			System.out.println("User Aleardy logedin redirecting to admin dashboard");
-			RequestDispatcher rd = request.getRequestDispatcher("/admin/");
-			rd.forward(request, response);
-		}
-		else if(isLogedIn || isLoginUri) {
+			httpServletRes.sendRedirect(contextPath + "/admin/");
+//			RequestDispatcher rd = request.getRequestDispatcher("/admin/");
+//			rd.forward(request, response);
+		} else if(isLogedIn || isLoginUri) {
 			System.out.println("----------- user loged in go to next filteration");
 			chain.doFilter(request, response);
 		} else {
