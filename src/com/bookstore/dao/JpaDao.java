@@ -22,10 +22,11 @@ public class JpaDao<E>{
 	}
 	
 	public E create(E e) {
+		
 		EntityManager entityManager = entityManagerFactory.createEntityManager();
 		
 		entityManager.getTransaction().begin();
-		
+		System.out.println("Transaction begin");
 		entityManager.persist(e);
 		entityManager.flush();
 		entityManager.refresh(e);
@@ -182,6 +183,7 @@ public class JpaDao<E>{
 		
 		 return entitiesCount;
 	}
+	
 	public void close() {
 		entityManagerFactory.close();
 	}

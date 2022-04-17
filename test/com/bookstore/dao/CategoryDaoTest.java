@@ -29,7 +29,7 @@ public class CategoryDaoTest {
 	
 	@Test
 	public void testCreateCategory() {
-		Category category = new Category("Python");
+		Category category = new Category("Marketing");
 		Category savedCategory = categoryDao.create(category);
 		
 		assertTrue(savedCategory != null && savedCategory.getCategoryId() > 0);
@@ -70,7 +70,7 @@ public class CategoryDaoTest {
 	@Test
 	public void testListAll() {
 		List<Category> categories = categoryDao.listAll();
-		
+		categories.forEach(c -> System.out.println(c.getName()));
 		assertTrue(categories.size() > 0);
 		
 	}
