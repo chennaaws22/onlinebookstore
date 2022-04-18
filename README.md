@@ -27,10 +27,12 @@
 - ✅ Create, delete, update and list Users who manage the book store.
 - ✅ Create, delete, update and list Categories.
 - ✅ Create, delete, update and list Books with it's book image displayed.
+- ✅ Create and list Customers.
 - 🧑 for website visitor
 - ✅ Display books by category.
 - ✅ Display new published books on the home page.
 - ✅ Display a certain book details.
+- ✅ Search for books by title or description or author.
 
 
 ## Acknowledgements

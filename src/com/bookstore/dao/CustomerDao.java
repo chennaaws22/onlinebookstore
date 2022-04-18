@@ -1,5 +1,6 @@
 package com.bookstore.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import com.bookstore.entity.Customer;
@@ -9,9 +10,8 @@ public class CustomerDao extends JpaDao<Customer> implements GenericDao<Customer
 	
 	@Override
 	public Customer create(Customer customer) {
-		
-		
-		System.out.println("creating customer with pass" + customer.getPassword());
+		Date registerDate = new Date();
+		customer.setRegisterDate(registerDate);
 		Customer createdCustomer = super.create(customer);
 		
 		return createdCustomer;
@@ -50,6 +50,10 @@ public class CustomerDao extends JpaDao<Customer> implements GenericDao<Customer
 	
 	public void close() {
 		super.close();
+	}
+
+	public Customer findByEmail(String email) {
+		return super.findWithNamedQueryAndParam("Customer.findByEmail", "email", email);
 	}
 	
 

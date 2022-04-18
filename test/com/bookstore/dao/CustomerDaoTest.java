@@ -84,6 +84,13 @@ public class CustomerDaoTest {
 		assertTrue(customers.size() > 0);
 	}
 	
+	@Test
+	public void testFindByEmail() {
+		String email = "mohamedshaker@gmail.com";
+		Customer customer = customerDao.findByEmail(email);
+		
+		assertTrue(customer.getEmail().equals(email));
+	}
 	
 	@Test
 	public void testCountAll() {
