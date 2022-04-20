@@ -7,35 +7,40 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>Manage Books - Admin</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
 </head>
 <body>
-	<jsp:directive.include file="header.jsp"/>
-	<div align="center">
-	
-		<h2>Books Management</h2>
-		<a href="create_book">create new Book</a>
-	</div>
-	<br>
+<jsp:directive.include file="header.jsp"/>
+
 	<c:if test="${message != null}">
 		<h4 align="center">${message}</h4>
 	</c:if>
 	
-	<div align="center">
-		<table border="1" cellPadding="5">
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col text-center mb-2">
+				<h3 class="text-center">Books Management</h3>
+				<a class="btn btn-success" href="create_book">Create new Book</a>
+			</div>
+		</div>
+	<div class="row">
+	<div class="col ">
+		<table  class="table table-bordered ">
 			<tr>
-				<th>Index</th>
-				<th>Id</th>
-				<th>Image</th>
-				<th>Title</th>
-				<th>Author</th>
-				<th>Category</th>
-				<th>Price</th>
-				<th>PublishDate</th>
-				<th>Actions</th>	
+				<th scope="col">Index</th>
+				<th scope="col">Id</th>
+				<th scope="col">Image</th>
+				<th scope="col">Title</th>
+				<th scope="col">Author</th>
+				<th scope="col">Category</th>
+				<th scope="col">Price</th>
+				<th scope="col">PublishDate</th>
+				<th scope="col">Actions</th>	
 			</tr>
 			<c:forEach var="book" items="${books}" varStatus="status">
 				<tr>
-					<td>${status.index}</td>
+					<th scope="row">${status.index}</td>
 					<td>${book.bookId}</td>
 					<td><img src="data:image/jpg;base64,${book.base64Image}" width="80" height="100"/></td>
 					<td>${book.title}</td>
@@ -43,11 +48,13 @@
 					<td>${book.category.name}</td>
 					<td>${book.price}</td>
 					<td>${book.publishDate}</td>
-					<td><a href="edit_book?bookId=${book.bookId}">Edit</a> 
-					  | <a href="delete_book?bookId=${book.bookId}" onClick="confirmDelete(${book.bookId})">Delete</a></td>
+					<td><a class="btn btn-sm btn-primary mb-1" href="edit_book?bookId=${book.bookId}">Edit</a> 
+					<br/><a class="btn btn-sm btn-danger" href="delete_book?bookId=${book.bookId}" onClick="confirmDelete(${book.bookId})">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>
+		</div>
+		</div>
 	</div>
 	<br><br>
 	<jsp:directive.include file="footer.jsp"/>
@@ -59,5 +66,7 @@
 			}
 		}
 	</script>
+	
+	
 </body>
 </html>

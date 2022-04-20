@@ -6,7 +6,8 @@
 - ✅ MVC Design pattern and organizing the code
 - ✅ Debugging and problem solving
 
-
+![bookStoreHome!](images/home.png)
+![bookStoreHome!](images/book_list.png)
 ## Table of Contents
 * [Technologies Used](#technologies-used)
 * [Features](#features)
@@ -27,7 +28,7 @@
 - ✅ Create, delete, update and list Users who manage the book store.
 - ✅ Create, delete, update and list Categories.
 - ✅ Create, delete, update and list Books with it's book image displayed.
-- ✅ Create and list Customers.
+- ✅ Create, delete, update and list Customers.
 - 🧑 for website visitor
 - ✅ Display books by category.
 - ✅ Display new published books on the home page.

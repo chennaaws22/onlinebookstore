@@ -90,7 +90,7 @@ public class JpaDao<E>{
 
 		Query query = entityManager.createNamedQuery(namedQuery);
 		query.setFirstResult(0);
-		query.setMaxResults(4);
+		query.setMaxResults(limit);
 		List<E> entities = query.getResultList();
 		
 		entityManager.close();
