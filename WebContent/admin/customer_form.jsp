@@ -27,7 +27,7 @@
 				<form action="create_customer" method="post">
 			</c:if>
 			<c:if test="${customer != null}">
-				<form action="update_customer" method="post">
+				<form action="edit_customer" method="post">
 				<input type="hidden" name="customerId" value="${customer.customerId}" />
 			</c:if>
 			

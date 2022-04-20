@@ -70,4 +70,54 @@ public class CustomerServices {
 		customer.setZipcode(zipcode);
 	}
 
+	public void showEditCustomerForm() throws ServletException, IOException {
+		int customerId = Integer.parseInt(this.request.getParameter("customerId"));
+		Customer customer = customerDao.get(customerId);
+		this.request.setAttribute("customer", customer);
+		
+		redirectingServices.redirectTo("/admin/customer_form.jsp");		
+	}
+	
+	public void editCustomer() throws ServletException, IOException {
+		int customerId = Integer.parseInt(this.request.getParameter("customerId"));
+		Customer customerById = customerDao.get(customerId);
+		if(customerById != null) {
+			String email = this.request.getParameter("email");
+			Customer customerByEmail = customerDao.findByEmail(email);
+		
+			System.out.println("------------Updating customer with------------------");
+			if(customerByEmail != null && customerByEmail.getCustomerId() != customerById.getCustomerId()) {
+				System.out.println("Email form: "  + email + "email database: " + customerByEmail.getEmail() );
+				String message = "There is another customer with the same email address";
+				redirectingServices.redirectToWithMessage("message.jsp", message);
+			} else {
+				Customer updatedCustomer =  new Customer(); 
+				updatedCustomer.setCustomerId(customerId);
+				updatedCustomer.setRegisterDate(customerById.getRegisterDate());
+				
+				setCustomerValueFromParam(updatedCustomer);
+				customerDao.update(updatedCustomer);
+				String message = "Customer Updated Successfully";
+				redirectingServices.redirectToWithMessage("/admin/list_customer", message);
+			}
+		}else {
+			redirectingServices.redirectToWithMessage("message.jsp", "there is no customer with this id");
+		}
+	}
+
+	public void deleteCustomer() throws ServletException, IOException {
+		int customerId = Integer.parseInt(this.request.getParameter("customerId"));
+		Customer customer = customerDao.get(customerId);
+		
+		if(customer != null) {
+			customerDao.delete(customerId);
+			String message = "customer deleted successfully";
+			redirectingServices.redirectToWithMessage("/admin/list_customer", message);
+		} else {
+			String message = "There is no customer with this id to delete";
+			redirectingServices.redirectToWithMessage("/admin/list_customer", message);
+		}
+		
+	}
+
 }
