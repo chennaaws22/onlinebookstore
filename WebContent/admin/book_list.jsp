@@ -25,7 +25,7 @@
 			</div>
 		</div>
 	<div class="row">
-	<div class="col ">
+		<div class="col ">
 		<table  class="table table-bordered ">
 			<tr>
 				<th scope="col">Index</th>

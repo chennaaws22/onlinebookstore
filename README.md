@@ -24,17 +24,17 @@
 ## Features
 - Unitl Now these are the features done
 - 👨‍💼 for the admin dashboard
-- ✅ Login to the admin dashboard.
-- ✅ Create, delete, update and list Users who manage the book store.
-- ✅ Create, delete, update and list Categories.
-- ✅ Create, delete, update and list Books with it's book image displayed.
-- ✅ Create, delete, update and list Customers.
+-   ✅ Login to the admin dashboard.
+-   ✅ Create, delete, update and list Users who manage the book store.
+-   ✅ Create, delete, update and list Categories.
+-   ✅ Create, delete, update and list Books with it's book image displayed.
+-   ✅ Create, delete, update and list Customers.
 - 🧑 for website visitor
-- ✅ Display books by category.
-- ✅ Display new published books on the home page.
-- ✅ Display a certain book details.
-- ✅ Search for books by title or description or author.
-
+-   ✅ Display books by category.
+-   ✅ Display new published books on the home page.
+-   ✅ Display a certain book details.
+-   ✅ Search for books by title or description or author.
+-   ✅ Customer Registeration
 
 ## Acknowledgements
 - This project was based on [this tutorial](https://bit.ly/3NFR3ZC).

@@ -120,4 +120,27 @@ public class CustomerServices {
 		
 	}
 
+	public void showRegisterCustomerForm() throws ServletException, IOException {
+		String registerPage = "frontend/customer_register_form.jsp";
+		redirectingServices.redirectTo(registerPage);
+	}
+	
+	public void registerCustomer() throws ServletException, IOException {
+		String email = this.request.getParameter("email");
+		Customer customerByEmail = customerDao.findByEmail(email);
+		
+		if(customerByEmail != null) {
+			System.out.println("Email form: "  + email + "email database: " + customerByEmail.getEmail() );
+			String message = "There is another customer with the same email address";
+			redirectingServices.redirectToWithMessage("frontend/customer_register_form.jsp", message);
+		} else {
+				Customer registerCustomer = new Customer();
+				setCustomerValueFromParam(registerCustomer);
+				customerDao.create(registerCustomer);
+				String message = "Customer Registerd Successfully";
+				redirectingServices.redirectToWithMessage("/", message);
+			}
+
+	}
+
 }

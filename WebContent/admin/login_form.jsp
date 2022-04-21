@@ -12,31 +12,35 @@
 
 </head>
 <body>
-<div  class="container my-5">
-	<div  class="row  mb-2">
-		<c:if test="${message != null}">
-							<c:out value="${message}" />
-						</c:if>
-					<h3>Admin Login</h3>
-	</div>
 
-		<form  class="row col-6" action=" admin/login" method="post" >
-			  <div class="row  mb-3">
-			    <label for="email" class="col-sm-2 col-form-label">Email</label>
-			    <div class="col-sm-10">
-			      <input type="email" name="email" class="form-control" id="email">
-			    </div>
-			  </div>
-			  <div class="row mb-3">
-			    <label for="password" class="col-sm-2 col-form-label">Password</label>
-			    <div class="col-sm-10">
-			      <input type="password" name="password"class="form-control" id="password">
-			    </div>
-			  </div>
-			 
-			  <button type="submit" class="btn btn-primary">Sign in</button>
-			</form>
-		</div>
+<div class="container">
+    <div class="row">
+      <div class="col-md-6 offset-md-3">
+        <h2 class="text-center text-dark mt-5">Admin Login</h2>
+        <div class="card my-5">
+          <form class="card-body cardbody-color p-lg-5" action="admin/login" method="post">
+
+            <div class="text-center">
+              <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
+                width="200px" alt="profile">
+            </div>
+
+            <div class="mb-3">
+              <input type="text" name="email" class="form-control" id="email" aria-describedby="emailHelp"
+                placeholder="Email">
+            </div>
+            <div class="mb-3">
+              <input type="password" name="password" class="form-control" id="password" placeholder="password">
+            </div>
+            <div class="text-center"><button type="submit" class="btn btn-color px-5 mb-5 w-100">Login</button></div>
+ 
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
 
 
 			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>

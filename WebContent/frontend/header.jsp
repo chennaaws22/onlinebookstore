@@ -27,7 +27,7 @@
           <a class="nav-link" href="#">Sign In</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="#">Register</a>
+          <a class="nav-link" href="register_customer">Register</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#">Cart</a>
