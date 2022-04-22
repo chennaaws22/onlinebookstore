@@ -31,18 +31,14 @@ public class CustomerDaoTest {
 	@Test
 	public void testCreateCustomer() throws ParseException {
 		Customer customer = new Customer();
-		customer.setFullname("Ahmed");
-		customer.setEmail("ahmed@gmail.com");
+		customer.setFullname("test");
+		customer.setEmail("test@gmail.com");
 		customer.setCountry("Egypt");
 		customer.setCity("ZAGAZIG");
 		customer.setAddress("asdsfsg");
-		customer.setPassword("pass123");
+		customer.setPassword("123456");
 		customer.setPhone("123456789");
 		customer.setZipcode("4321");
-		
-		DateFormat dateFormat = new SimpleDateFormat("yy-MM-dd");
-		Date registerDate = dateFormat.parse("2014-08-28");
-		customer.setRegisterDate(registerDate);
 		
 		Customer createdCustomer = customerDao.create(customer);
 		

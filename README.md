@@ -34,7 +34,7 @@
 -   ✅ Display new published books on the home page.
 -   ✅ Display a certain book details.
 -   ✅ Search for books by title or description or author.
--   ✅ Customer Registeration
+-   ✅ Customer Registeration and Login
 
 ## Acknowledgements
 - This project was based on [this tutorial](https://bit.ly/3NFR3ZC).

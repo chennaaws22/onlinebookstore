@@ -1,17 +1,22 @@
 package com.bookstore.dao;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import com.bookstore.entity.Customer;
+import com.bookstore.entity.Users;
 
 public class CustomerDao extends JpaDao<Customer> implements GenericDao<Customer> {
 
 	
 	@Override
 	public Customer create(Customer customer) {
+		String encryptedPassword = HashGenerator.generateMD5(customer.getPassword());
 		Date registerDate = new Date();
 		customer.setRegisterDate(registerDate);
+		customer.setPassword(encryptedPassword);
 		Customer createdCustomer = super.create(customer);
 		
 		return createdCustomer;
@@ -54,6 +59,22 @@ public class CustomerDao extends JpaDao<Customer> implements GenericDao<Customer
 
 	public Customer findByEmail(String email) {
 		return super.findWithNamedQueryAndParam("Customer.findByEmail", "email", email);
+	}
+	
+	public boolean checkLogin(String email, String password) {
+		Map<String, Object> params = new HashMap<>();
+		String encryptedPassword = HashGenerator.generateMD5(password);
+		params.put("email", email);
+		params.put("password", encryptedPassword);
+		
+		Customer customer = super.findWithNamedQueryAndParam("Customer.checkLogin", params);
+		
+		if(customer != null) {
+			System.out.println("user found with correct password and email" + encryptedPassword);
+			return true;	
+		}
+		System.out.println("user not found with uncorrect password and email" + encryptedPassword);
+		return false;
 	}
 	
 

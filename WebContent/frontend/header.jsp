@@ -23,15 +23,26 @@
 				</c:forEach>
           </ul>
         </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Sign In</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="register_customer">Register</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#">Cart</a>
-        </li>
+        <c:if test="${sessionScope.customerLoggedIn == null }" >
+	        <li class="nav-item">
+	          <a class="nav-link" href="login">Sign In</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link" href="register_customer">Register</a>
+	        </li>
+        </c:if>
+        
+        <c:if test="${sessionScope.customerLoggedIn != null }">
+	        <li class="nav-item">
+	          <a class="nav-link" href="cart">Cart</a>
+	        </li>
+	         <li class="nav-item">
+	          <a class="nav-link" href="orders">MyOrders</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link" href="logout">logout</a>
+	        </li>
+        </c:if>
       </ul>
       <form class="d-flex" action="search" method="get">
         <input class="form-control me-2" name="keyword" type="search" placeholder="Search" aria-label="Search">

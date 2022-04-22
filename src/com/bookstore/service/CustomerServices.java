@@ -143,4 +143,24 @@ public class CustomerServices {
 
 	}
 
+	public void showCustomerLogin() throws ServletException, IOException {
+		redirectingServices.redirectTo("frontend/login.jsp");
+	}
+
+	public void loginCustomer() throws ServletException, IOException {
+		String email = this.request.getParameter("email");
+		String password = this.request.getParameter("password");
+		
+		boolean isUserLogedIn = customerDao.checkLogin(email, password);
+		
+		if(isUserLogedIn) {
+			System.out.println("------Customer logeded in correctelly");
+			this.request.getSession().setAttribute("customerLoggedIn", email);
+			redirectingServices.redirectTo("/");
+		}else {
+			System.out.println("------Customer not loged correct");
+			redirectingServices.redirectToWithMessage("/admin/login.jsp", "user not loged in");
+		}
+	}
+
 }
