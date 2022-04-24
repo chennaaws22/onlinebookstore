@@ -18,7 +18,7 @@
       <div class="col-md-6 offset-md-3">
         <h2 class="text-center text-dark mt-5">Admin Login</h2>
         <div class="card my-5">
-          <form class="card-body cardbody-color p-lg-5" action="admin/login" method="post">
+          <form class="card-body cardbody-color p-lg-5" action="login" method="post">
 
             <div class="text-center">
               <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"

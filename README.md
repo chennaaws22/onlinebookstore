@@ -35,6 +35,7 @@
 -   ✅ Display a certain book details.
 -   ✅ Search for books by title or description or author.
 -   ✅ Customer Registeration and Login
+-   ✅ View customer profile and update profile
 
 ## Acknowledgements
 - This project was based on [this tutorial](https://bit.ly/3NFR3ZC).

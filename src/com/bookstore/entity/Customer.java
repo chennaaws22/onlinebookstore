@@ -1,6 +1,7 @@
 package com.bookstore.entity;
 // Generated Feb 23, 2022 11:52:55 AM by Hibernate Tools 5.2.12.Final
 
+import java.util.Base64;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
 
 /**
@@ -40,14 +42,16 @@ public class Customer implements java.io.Serializable {
 	private String zipcode;
 	private String password;
 	private Date registerDate;
+	private byte[] image;
 	private Set<Review> reviews = new HashSet<Review>(0);
 	private Set<BookOrder> bookOrders = new HashSet<BookOrder>(0);
+	private String base64Image;
 
 	public Customer() {
 	}
 
 	public Customer(String email, String fullname, String address, String city, String country, String phone,
-			String zipcode, String password, Date registerDate) {
+			String zipcode, String password, Date registerDate, byte[] image) {
 		this.email = email;
 		this.fullname = fullname;
 		this.address = address;
@@ -57,10 +61,11 @@ public class Customer implements java.io.Serializable {
 		this.zipcode = zipcode;
 		this.password = password;
 		this.registerDate = registerDate;
+		this.image = image;
 	}
 
 	public Customer(String email, String fullname, String address, String city, String country, String phone,
-			String zipcode, String password, Date registerDate, Set<Review> reviews, Set<BookOrder> bookOrders) {
+			String zipcode, String password, Date registerDate, byte[] image, Set<Review> reviews, Set<BookOrder> bookOrders) {
 		this.email = email;
 		this.fullname = fullname;
 		this.address = address;
@@ -70,6 +75,7 @@ public class Customer implements java.io.Serializable {
 		this.zipcode = zipcode;
 		this.password = password;
 		this.registerDate = registerDate;
+		this.image = image;
 		this.reviews = reviews;
 		this.bookOrders = bookOrders;
 	}
@@ -168,6 +174,29 @@ public class Customer implements java.io.Serializable {
 		this.registerDate = registerDate;
 	}
 
+	
+	@Column(name = "image", nullable = false)
+	public byte[] getImage() {
+		return this.image;
+	}
+	
+	public void setImage(byte[] image) {
+		this.image = image;
+	}
+	
+	
+	
+	@Transient
+	public void setBase64Image(String base64Image) {
+		this.base64Image = base64Image;
+	}
+	
+	@Transient
+	public String getBase64Image() {
+		return Base64.getEncoder().encodeToString(this.image);
+	}
+	
+	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "customer")
 	public Set<Review> getReviews() {
 		return this.reviews;
@@ -185,5 +214,8 @@ public class Customer implements java.io.Serializable {
 	public void setBookOrders(Set<BookOrder> bookOrders) {
 		this.bookOrders = bookOrders;
 	}
+
+	
+	
 
 }

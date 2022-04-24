@@ -46,6 +46,7 @@ public class AdminLoginFilter implements Filter {
 			chain.doFilter(request, response);
 		} else {
 			System.out.println("-----------User Not loged in redirecting to login page");
+//			httpServletRes.sendRedirect(contextPath + "/admin/login_form.jsp");
 			RequestDispatcher rd = request.getRequestDispatcher("/admin/login_form.jsp");
 			rd.forward(request, response);
  		}

@@ -24,10 +24,10 @@
 			<h4 align="center">${message} </h4>
 		</c:if>
 			<c:if test="${customer == null}">
-				<form action="create_customer" method="post">
+				<form action="create_customer" method="post" enctype="multipart/form-data">
 			</c:if>
 			<c:if test="${customer != null}">
-				<form action="edit_customer" method="post">
+				<form action="edit_customer" method="post" enctype="multipart/form-data">
 				<input type="hidden" name="customerId" value="${customer.customerId}" />
 			</c:if>
 			
@@ -37,6 +37,11 @@
 				<br>
 				password: <input type="text" name="password" size="20" value="${customer.password}" />
 				<br>
+				<br>
+				Customer Image: <input type="file" name="customerImage" id="customerImage" size="20" /><br>
+				<img width="80px" height="120pxs" id="thumbnail"  alt="thumbnail"
+						src="data:image/jpg;base64,${customer.base64Image}"/>
+						<br>
 				Phone: <input type="text" name="phone" size="20" value="${customer.phone}" />
 				<br>
 				City: <input type="text" name="city" size="20" value="${customer.city}">
@@ -63,5 +68,24 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	
 </body>	
-
+<script type="text/javascript">
+		$(document).ready(function(){
+			$('#customerImage').change(function(){
+				showImageThumbnail(this);
+			});
+			
+		});
+		
+		function showImageThumbnail(fileInput){
+			var file = fileInput.files[0];
+			
+			var reader = new FileReader();
+			
+			reader.onload = function(e){
+				$('#thumbnail').attr('src', e.target.result)
+			};
+			
+			reader.readAsDataURL(file);
+		}
+	</script>
 </html>

@@ -1,13 +1,17 @@
 package com.bookstore.service;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 
 import com.bookstore.dao.CustomerDao;
+import com.bookstore.dao.HashGenerator;
+import com.bookstore.entity.Book;
 import com.bookstore.entity.Customer;
 
 public class CustomerServices {
@@ -50,25 +54,7 @@ public class CustomerServices {
 
 	}
 	
-	private void setCustomerValueFromParam(Customer customer) {
-		String fullName = this.request.getParameter("fullName");
-		String email = this.request.getParameter("email");
-		String password = this.request.getParameter("password");
-		String city = this.request.getParameter("city");
-		String country = this.request.getParameter("country");
-		String address = this.request.getParameter("address");
-		String phone = this.request.getParameter("phone");
-		String zipcode = this.request.getParameter("zipcode");
-		
-		customer.setFullname(fullName);
-		customer.setEmail(email);
-		customer.setPassword(password);
-		customer.setCity(city);
-		customer.setCountry(country);
-		customer.setAddress(address);
-		customer.setPhone(phone);
-		customer.setZipcode(zipcode);
-	}
+
 
 	public void showEditCustomerForm() throws ServletException, IOException {
 		int customerId = Integer.parseInt(this.request.getParameter("customerId"));
@@ -156,10 +142,104 @@ public class CustomerServices {
 		if(isUserLogedIn) {
 			System.out.println("------Customer logeded in correctelly");
 			this.request.getSession().setAttribute("customerLoggedIn", email);
+			this.request.getSession().setAttribute("customerName", customerDao.findByEmail(email).getFullname());
 			redirectingServices.redirectTo("/");
 		}else {
 			System.out.println("------Customer not loged correct");
-			redirectingServices.redirectToWithMessage("/admin/login.jsp", "user not loged in");
+			redirectingServices.redirectToWithMessage("frontend/login.jsp", "Customer not loged in");
+		}
+	}
+
+	public void showCustomerProfile() throws ServletException, IOException {
+			String customerLogedInEmail = (String)this.request.getSession().getAttribute("customerLoggedIn");
+			Customer customer = customerDao.findByEmail(customerLogedInEmail);
+			if(customer != null) {
+				this.request.setAttribute("customer", customer);
+				System.out.println("Redirecting to customer profile");
+				redirectingServices.redirectTo("frontend/customer_profile.jsp");
+			} else {
+				redirectingServices.redirectToWithMessage("frontend/message.jsp","Customer Email not found");
+			}
+	}
+	
+	public void updateCustomerProfile() throws IOException, ServletException {
+		String customerLogedInEmail = (String)this.request.getSession().getAttribute("customerLoggedIn");
+
+		Customer customer = customerDao.findByEmail(customerLogedInEmail);
+		System.out.println("customer address from database --->  " + customer.getAddress());
+		if(customer != null) {
+			System.out.println("Setting customer value ");
+
+			setCustomerValueFromParam(customer);
+		
+			customerDao.update(customer);
+			this.request.setAttribute("message", "Cusotmer updated successfully");
+			showCustomerProfile();
+		}
+	}
+	
+	
+	private void setCustomerValueFromParam(Customer customer) throws IOException, ServletException {
+		String fullName = this.request.getParameter("fullname");
+		String email = this.request.getParameter("email");
+		String password = this.request.getParameter("password");
+		String city = this.request.getParameter("city");
+		String country = this.request.getParameter("country");
+		String address = this.request.getParameter("address");
+		String phone = this.request.getParameter("phone");
+		String zipcode = this.request.getParameter("zipcode");
+		
+		
+		
+		if(fullName != null && !(fullName.equals("")) ) {
+			customer.setFullname(fullName);
+		}
+		
+		if(email != null && !(email.equals("")) ) {
+			customer.setEmail(email);
+		}
+		
+		if(password != null && !(password.equals("")) ) {
+			String password2 = this.request.getParameter("password2");
+			if(password.equals(password2)) {
+				String hashedPassword = HashGenerator.generateMD5(password);
+				customer.setPassword(hashedPassword);
+			} else {
+				this.request.setAttribute("message", "passwords not equal");
+				showCustomerProfile();
+			}
+		}
+		
+		if(city != null && !(city.equals("")) ) {
+			customer.setCity(city);
+		}
+		if(country != null && !(country.equals("")) ) {
+			customer.setCountry(country);
+		}
+		if(address != null && !(address.equals("")) ) {
+			customer.setAddress(address);
+		}
+		if(phone != null && !(phone.equals("")) ) {
+			customer.setPhone(phone);
+		}
+		if(zipcode != null && !(zipcode.equals("")) ) {
+			customer.setZipcode(zipcode);
+		}
+		
+		getImageBytesFromRequest(customer);
+	}
+	private void getImageBytesFromRequest(Customer customer) throws IOException, ServletException {
+		Part part = this.request.getPart("customerImage");	
+		System.out.println("Checking part #########");
+		if(part != null && part.getSize() > 0) {
+			System.out.println("###part exist #########");
+			int partSize = (int) part.getSize();
+			byte[] imageBytes = new byte[partSize];
+			System.out.println("the type of file is ---------> " + part.getContentType());
+			InputStream inputStream = part.getInputStream();
+			inputStream.read(imageBytes);
+			inputStream.close();
+			customer.setImage(imageBytes);
 		}
 	}
 

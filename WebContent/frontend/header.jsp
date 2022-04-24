@@ -33,6 +33,9 @@
         </c:if>
         
         <c:if test="${sessionScope.customerLoggedIn != null }">
+        <li class="nav-item">
+	          <a class="nav-link" href="view_profile">Welcome, ${sessionScope.customerName}</a>
+	        </li>
 	        <li class="nav-item">
 	          <a class="nav-link" href="cart">Cart</a>
 	        </li>

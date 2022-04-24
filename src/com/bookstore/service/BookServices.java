@@ -55,7 +55,8 @@ public class BookServices {
 		System.out.println("show book form function");
 		
 		System.out.println("redirecting to book form");
-		
+		List<Category> categories = categoryDao.listAll();
+		this.request.setAttribute("categories", categories);
 		String bookFormPage = "../admin/book_form.jsp";
 		redirectingServices.redirectTo(bookFormPage);
 
@@ -64,7 +65,8 @@ public class BookServices {
 	public void createBook() throws IOException, ServletException {
 		Book newBook = new Book();
 		this.readRequestFields(newBook);
-		
+		List<Category> categories = categoryDao.listAll();
+		this.request.setAttribute("categories", categories);
 		bookDao.create(newBook);
 		this.request.setAttribute("message", "book added successfully");
 		showBookTable();
@@ -173,7 +175,7 @@ public class BookServices {
 			System.out.println("###part exist #########");
 			int partSize = (int) part.getSize();
 			byte[] imageBytes = new byte[partSize];
-			System.out.println("the typ of file is ---------> " + part.getContentType());
+			System.out.println("the type of file is ---------> " + part.getContentType());
 			InputStream inputStream = part.getInputStream();
 			inputStream.read(imageBytes);
 			inputStream.close();

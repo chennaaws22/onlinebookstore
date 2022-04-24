@@ -40,7 +40,7 @@
 			</tr>
 			<c:forEach var="book" items="${books}" varStatus="status">
 				<tr>
-					<th scope="row">${status.index}</td>
+					<th scope="row">${status.index}</th>
 					<td>${book.bookId}</td>
 					<td><img src="data:image/jpg;base64,${book.base64Image}" width="80" height="100"/></td>
 					<td>${book.title}</td>
