@@ -30,9 +30,9 @@
   </li>
  
    <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="reviews">reviews</a>
+    <a class="nav-link active" aria-current="page" href="list_reviews">reviews</a>
   </li>
  <li class="nav-item">
-    <a class="nav-link active" aria-current="page" href="orders">Orders</a>
+    <a class="nav-link active" aria-current="page" href="list_orders">Orders</a>
   </li>
 </ul>

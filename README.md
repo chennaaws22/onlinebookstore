@@ -29,6 +29,7 @@
 -   ✅ Create, delete, update and list Categories.
 -   ✅ Create, delete, update and list Books with it's book image displayed.
 -   ✅ Create, delete, update and list Customers.
+-   ✅ delete, update and list customers review's.
 - 🧑 for website visitor
 -   ✅ Display books by category.
 -   ✅ Display new published books on the home page.
