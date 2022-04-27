@@ -9,7 +9,9 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -17,6 +19,7 @@ import org.junit.Test;
 import javax.persistence.*;
 import com.bookstore.entity.Book;
 import com.bookstore.entity.Category;
+import com.bookstore.entity.Review;
 
 public class BookDaoTest{
 	private static BookDao bookDao;
@@ -133,6 +136,23 @@ public class BookDaoTest{
 		
 	}
 	
+	@Test
+	public void testCalcAvg() {
+		Set<Review> reviews = new HashSet<>();
+		Review review1 = new Review();
+		review1.setRating(5);
+		Review review2 = new Review();
+		review2.setRating(4);
+		
+		reviews.add(review1);reviews.add(review2);
+		
+		Book book = new Book();
+		book.setReviews(reviews);
+		float avg = book.calculateAverageReviews();
+		
+		assertTrue(avg == 4.5f);
+	}
+	
 	
 	@Test
 	public void testCreateBook() throws IOException, ParseException {
@@ -189,10 +209,17 @@ public class BookDaoTest{
 	}
 	
 	@Test
-	public void TestCountByCategory() {
+	public void testCountByCategory() {
 		long booksCount = bookDao.countByCategory(12);
 		
 		assertEquals(booksCount, 3);
 		
+	}
+	
+	@Test
+	public void testGetAvgRatingString() {
+		Book book = new Book();
+		String stars = book.getAvgRatingString(2.5f);
+		assertEquals(stars, "fill,fill,half,,");
 	}
 }

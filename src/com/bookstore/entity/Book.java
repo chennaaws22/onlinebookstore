@@ -185,7 +185,7 @@ public class Book implements java.io.Serializable {
 		this.lastUpdateTime = lastUpdateTime;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "book")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "book")
 	public Set<Review> getReviews() {
 		return this.reviews;
 	}
@@ -212,6 +212,50 @@ public class Book implements java.io.Serializable {
 	public void setBase64Image(String base64Image) {
 		this.base64Image = base64Image;
 	}
+	
+	@Transient
+	public float calculateAverageReviews() {
+		if(reviews.isEmpty()) {
+			return 0.0f;
+		}
+		float averageRating = 0.0f;
+		float sum = 0.0f;
+		for(Review review: reviews) {
+			sum += review.getRating();
+		}
+		averageRating = sum / reviews.size();
+		return averageRating;
+	}
+	
+	@Transient
+	public String getAvgRatingString(float avg) {
+		StringBuilder stars = new StringBuilder("");
+		int numOfStarsFill = (int) avg;
+		for(int i = 0; i < numOfStarsFill; i++) {
+			stars.append("fill,"); 
+		}
+		
+		if(numOfStarsFill < avg) {
+			stars.append("half,");
+		}
+		
+		for(int i = numOfStarsFill; i < 5; i++) {
+			stars.append("empty,");
+		}
+		
+		return stars.toString().substring(0, stars.length() - 1);
+		
+	}
+	
+	
+	
+	@Transient
+	public String getRatingString() {
+		float avg = calculateAverageReviews();
+		
+		return getAvgRatingString(avg);
+	}
+	
 
 	@Override
 	public int hashCode() {

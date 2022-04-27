@@ -11,6 +11,7 @@ import javax.servlet.http.Part;
 
 import com.bookstore.dao.CustomerDao;
 import com.bookstore.dao.HashGenerator;
+import com.bookstore.dao.ReviewDao;
 import com.bookstore.entity.Book;
 import com.bookstore.entity.Customer;
 
@@ -96,9 +97,19 @@ public class CustomerServices {
 		Customer customer = customerDao.get(customerId);
 		
 		if(customer != null) {
-			customerDao.delete(customerId);
-			String message = "customer deleted successfully";
-			redirectingServices.redirectToWithMessage("/admin/list_customer", message);
+			ReviewDao reviewDao = new ReviewDao();
+			long reviews = reviewDao.countByCustomer(customerId);
+			if(reviews == 0) {
+				customerDao.delete(customerId);
+				String message = "customer deleted successfully";
+				this.request.setAttribute("message", message);
+				showCustomerTable();
+			} else{
+				String message = "Could not delete customer with ID " + customerId + " because he/she posted reviews for books'.";
+				this.request.setAttribute("message", message);
+				showCustomerTable();
+			}
+			
 		} else {
 			String message = "There is no customer with this id to delete";
 			redirectingServices.redirectToWithMessage("/admin/list_customer", message);
@@ -188,8 +199,6 @@ public class CustomerServices {
 		String address = this.request.getParameter("address");
 		String phone = this.request.getParameter("phone");
 		String zipcode = this.request.getParameter("zipcode");
-		
-		
 		
 		if(fullName != null && !(fullName.equals("")) ) {
 			customer.setFullname(fullName);

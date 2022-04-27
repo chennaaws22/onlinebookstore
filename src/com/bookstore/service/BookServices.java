@@ -18,6 +18,7 @@ import javax.servlet.http.Part;
 
 import com.bookstore.dao.BookDao;
 import com.bookstore.dao.CategoryDao;
+import com.bookstore.dao.ReviewDao;
 import com.bookstore.entity.Book;
 import com.bookstore.entity.Category;
 
@@ -45,7 +46,7 @@ public class BookServices {
 	
 	public void showBookTable() throws ServletException, IOException {
 		this.request.setAttribute("books", this.listBooks());
-		
+	
 		String listPage = "book_list.jsp";
 		
 		redirectingServices.redirectTo(listPage);
@@ -158,7 +159,16 @@ public class BookServices {
 		int bookId = Integer.parseInt(this.request.getParameter("bookId"));
 		Book book = bookDao.get(bookId);
 		if(book != null) {
-			bookDao.delete(bookId);
+			ReviewDao reviewDao = new ReviewDao();
+			long reviews = reviewDao.countByBook(bookId);
+			if(reviews == 0) {
+				bookDao.delete(bookId);
+			} else {
+				String message = "book couldn't be deleted it has review associated with it.";
+				this.request.setAttribute("message", message);
+				showBookTable();
+			}
+			
 		} else {
 			this.request.setAttribute("message", "there is no book whit this id");
 			showBookTable();
