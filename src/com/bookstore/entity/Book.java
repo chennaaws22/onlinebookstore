@@ -228,6 +228,20 @@ public class Book implements java.io.Serializable {
 	}
 	
 	@Transient
+	public float getAvgRate() {
+		if(reviews.isEmpty()) {
+			return 0.0f;
+		}
+		float averageRating = 0.0f;
+		float sum = 0.0f;
+		for(Review review: reviews) {
+			sum += review.getRating();
+		}
+		averageRating = sum / reviews.size();
+		return averageRating;
+	}
+	
+	@Transient
 	public String getAvgRatingString(float avg) {
 		StringBuilder stars = new StringBuilder("");
 		int numOfStarsFill = (int) avg;

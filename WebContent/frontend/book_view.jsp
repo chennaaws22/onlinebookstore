@@ -57,6 +57,9 @@
       <div class="col-md-12 col-lg-10 col-xl-8">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h4 class="text-dark mb-0">Customer Reviews</h4>
+          <div>
+          	<a class="btn btn-primary" href="write_review?bookId=${book.bookId}" >Write a review</a>
+          </div>
         </div>
         
 	<c:forEach var="review" items="${book.reviews}" >

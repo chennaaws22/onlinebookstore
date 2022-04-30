@@ -7,6 +7,7 @@ import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.servlet.http.Part;
 
 import com.bookstore.dao.CustomerDao;
@@ -152,9 +153,18 @@ public class CustomerServices {
 		
 		if(isUserLogedIn) {
 			System.out.println("------Customer logeded in correctelly");
+			HttpSession session = request.getSession(false);
 			this.request.getSession().setAttribute("customerLoggedIn", email);
 			this.request.getSession().setAttribute("customerName", customerDao.findByEmail(email).getFullname());
-			redirectingServices.redirectTo("/");
+			Object objRedirectURL = session.getAttribute("redirectingURL");
+			if(objRedirectURL != null) {
+				String redirectURL = (String) objRedirectURL;
+				this.request.getSession().removeAttribute("redirectingURL");
+				this.response.sendRedirect(redirectURL);
+			}else {
+				showCustomerProfile();
+			}
+			
 		}else {
 			System.out.println("------Customer not loged correct");
 			redirectingServices.redirectToWithMessage("frontend/login.jsp", "Customer not loged in");

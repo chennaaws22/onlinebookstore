@@ -26,7 +26,9 @@ import javax.persistence.Transient;
 	@NamedQuery(name="Review.listAll", query="SELECT r FROM Review r ORDER BY r.reviewTime"),
 	@NamedQuery(name="Review.count", query="SELECT count(*) FROM Review r"),
 	@NamedQuery(name="Review.countByBook", query="SELECT count(r.reviewId) FROM Review r WHERE r.book.bookId = :bookId"),
-	@NamedQuery(name = "Review.countByCustomer", query = "SELECT COUNT(r.reviewId) FROM Review r WHERE r.customer.customerId = :customerId")
+	@NamedQuery(name ="Review.countByCustomer", query = "SELECT COUNT(r.reviewId) FROM Review r WHERE r.customer.customerId = :customerId"),
+	@NamedQuery(name="Review.findByCustomerAndBook", query = "SELECT r FROM Review r WHERE "
+			+ "r.customer.customerId = :customerId AND r.book.bookId = :bookId")
 })
 public class Review implements java.io.Serializable {
 
