@@ -36,9 +36,7 @@
         <li class="nav-item">
 	          <a class="nav-link" href="view_profile">Welcome, ${sessionScope.customerName}</a>
 	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link" href="cart">Cart</a>
-	        </li>
+	        
 	         <li class="nav-item">
 	          <a class="nav-link" href="orders">MyOrders</a>
 	        </li>
@@ -46,6 +44,9 @@
 	          <a class="nav-link" href="logout">logout</a>
 	        </li>
         </c:if>
+        <li class="nav-item">
+	          <a class="nav-link" href="view_cart">Cart</a>
+	     </li>
       </ul>
       <form class="d-flex" action="search" method="get">
         <input class="form-control me-2" name="keyword" type="search" placeholder="Search" aria-label="Search">

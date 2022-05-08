@@ -39,6 +39,7 @@
 -   ✅ Display a certain book details.
 -   ✅ Search for books by title or description or author.
 -   ✅ Customer Registeration and Login
+-   ✅ Add books to Shopping Cart, update or clear the shopping cart.
 - 👨‍💼 For loged in customers
 -   ✅ View customer profile and update profile.
 -   ✅ Write a review and and rate a book.

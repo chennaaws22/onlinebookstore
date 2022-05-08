@@ -31,10 +31,10 @@
                         <p class="lead">${book.description}</p>
                         <div class="d-flex">
                             <input class="form-control text-center me-3" id="inputQuantity" type="num" value="1" style="max-width: 3rem" />
-                            <button class="btn btn-outline-dark flex-shrink-0" type="button">
+                            <a href="add_to_cart?bookId=${book.bookId}" class="btn btn-outline-dark flex-shrink-0" type="button">
                                 <i class="bi-cart-fill me-1"></i>
                                 Add to cart
-                            </button>
+                            </a>
                         </div>
                          <div class="d-flex justify-content-center small text-warning mb-2">
                            <c:forTokens items="${book.ratingString}" delims="," var="star">
