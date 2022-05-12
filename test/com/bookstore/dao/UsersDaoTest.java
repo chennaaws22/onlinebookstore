@@ -33,9 +33,9 @@ public class UsersDaoTest {
 	@Test
 	public void testCreateUser() {
 		Users u2 = new Users();
-		u2.setFullName("mohamed 20");
-		u2.setEmail("mohamed20@gmail.com");
-		u2.setPassword("mohamed20");
+		u2.setFullName("admin");
+		u2.setEmail("admin");
+		u2.setPassword("admin");
 		
 		Users savedU = usersDao.create(u2);
 		
@@ -76,7 +76,7 @@ public class UsersDaoTest {
 	
 	@Test
 	public void testDeleteUser() {
-		Integer userId = 22;
+		Integer userId = 47;
 		usersDao.delete(userId);
 		Users u = usersDao.get(userId);
 		assertNull(u);

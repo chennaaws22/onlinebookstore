@@ -49,6 +49,9 @@ public class Customer implements java.io.Serializable {
 
 	public Customer() {
 	}
+	public Customer(int id) {
+		this.customerId = id;
+	}
 
 	public Customer(String email, String fullname, String address, String city, String country, String phone,
 			String zipcode, String password, Date registerDate, byte[] image) {
@@ -80,6 +83,7 @@ public class Customer implements java.io.Serializable {
 		this.bookOrders = bookOrders;
 	}
 
+	
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 

@@ -94,7 +94,6 @@ public class Book implements java.io.Serializable {
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
-
 	@Column(name = "book_id", unique = true, nullable = false)
 	public Integer getBookId() {
 		return this.bookId;
