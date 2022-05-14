@@ -28,6 +28,15 @@ public class CustomerDaoTest {
 		customerDao.close();
 	}
 	
+	@Test 
+	public void testCustomerByOrderCount() {
+		Integer customerId = 28;
+		
+		long counts = customerDao.countByOrder(customerId);
+		
+		assertTrue(counts == 1);
+	}
+	
 	@Test
 	public void testCreateCustomer() throws ParseException {
 		Customer customer = new Customer();

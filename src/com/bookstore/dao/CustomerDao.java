@@ -53,6 +53,11 @@ public class CustomerDao extends JpaDao<Customer> implements GenericDao<Customer
 		return customerCount;
 	}
 	
+	public long countByOrder(Integer cusotmerId) {
+		long customerByOrderCount = super.countWithNamedQueryAndParam("Customer.countByOrders", "customerId", cusotmerId);
+		return customerByOrderCount;
+	}
+	
 	public void close() {
 		super.close();
 	}

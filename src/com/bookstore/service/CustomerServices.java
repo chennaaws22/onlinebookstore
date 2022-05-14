@@ -96,20 +96,29 @@ public class CustomerServices {
 	public void deleteCustomer() throws ServletException, IOException {
 		int customerId = Integer.parseInt(this.request.getParameter("customerId"));
 		Customer customer = customerDao.get(customerId);
-		
+
 		if(customer != null) {
 			ReviewDao reviewDao = new ReviewDao();
 			long reviews = reviewDao.countByCustomer(customerId);
-			if(reviews == 0) {
-				customerDao.delete(customerId);
-				String message = "customer deleted successfully";
-				this.request.setAttribute("message", message);
-				showCustomerTable();
-			} else{
+			if(reviews != 0) {
 				String message = "Could not delete customer with ID " + customerId + " because he/she posted reviews for books'.";
 				this.request.setAttribute("message", message);
 				showCustomerTable();
+				return;
+			} 
+			
+			long customerByOrderCount = customerDao.countByOrder(customerId);
+			if(customerByOrderCount != 0) {
+				String message = "Could not delete customer with ID " + customerId + " because he/she ordered books'.";
+				this.request.setAttribute("message", message);
+				showCustomerTable();
+				return;
 			}
+			
+			customerDao.delete(customerId);
+			String message = "customer deleted successfully";
+			this.request.setAttribute("message", message);
+			showCustomerTable();
 			
 		} else {
 			String message = "There is no customer with this id to delete";

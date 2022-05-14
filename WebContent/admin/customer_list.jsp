@@ -22,7 +22,7 @@
 	</div>
 	<br>
 	<c:if test="${message != null}">
-		<h4 align="center">${message}</h4>
+		<h4 class="text-danger text-center">${message}</h4>
 	</c:if>
 	
 	

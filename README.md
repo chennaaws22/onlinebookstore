@@ -10,6 +10,7 @@
 ![bookList!](images/book_list.png)
 ![customerProfile!](images/customer_profile.png)
 ![bookReviewForm!](images/review_book.png)
+![orderDetailAdmin!](images/order_detail_admin.png)
 
 ## Table of Contents
 * [Technologies Used](#technologies-used)
@@ -33,7 +34,8 @@
 -   ✅ Create, delete, update and list Books with it's book image displayed.
 -   ✅ Create, delete, update and list Customers.
 -   ✅ delete, update and list customer's Reviews.
--   ✅ list customer's Orders.
+-   ✅ delete and list orders created by customer and it's details.
+
 - 🧑 For website visitors
 -   ✅ Display books by category.
 -   ✅ Display new published books on the home page.
@@ -41,6 +43,7 @@
 -   ✅ Search for books by title or description or author.
 -   ✅ Customer Registeration and Login
 -   ✅ Add books to Shopping Cart, update or clear the shopping cart.
+
 - 👨‍💼 For loged in customers
 -   ✅ View customer profile and update profile.
 -   ✅ Write a review and and rate a book.
