@@ -4,11 +4,14 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
-<head>
+<head>	
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css" rel="stylesheet" />
+<style>
+     <%@ include file="../css/cart.css"%>
+</style>
 </head>
 <body>	
 	<jsp:directive.include file="header.jsp"/>
@@ -22,6 +25,7 @@
 		</c:if>
 		
 	<c:if test="${cart.totalItems > 0}">
+	
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col text-center mb-2">
@@ -61,7 +65,7 @@
 				
 				<input class="btn btn-primary" type="submit" value="Update" />
 			</form>
-			<a href="clear_cart" class="btn btn-danger">Clear Cart</a>
+			<a href="clear_cart" class="btn btn-danger">Clear Cart</a><a href="checkout" class="btn btn-success">checkout</a>
 			</div>
 			</div>
 		</div>
@@ -71,7 +75,29 @@
 			
 		
 		
-			<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-		
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
 </body>
 </html>
+
+<script>
+$(document).ready(function(){
+
+	$('.radio-group .radio').click(function(){
+	    $('.radio').addClass('gray');
+	    $(this).removeClass('gray');
+	});
+
+	$('.plus-minus .plus').click(function(){
+	    var count = $(this).parent().prev().text();
+	    $(this).parent().prev().html(Number(count) + 1);
+	});
+
+	$('.plus-minus .minus').click(function(){
+	    var count = $(this).parent().prev().text();
+	    $(this).parent().prev().html(Number(count) - 1);
+	});
+
+	});
+</script>

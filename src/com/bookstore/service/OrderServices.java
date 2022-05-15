@@ -1,15 +1,22 @@
 package com.bookstore.service;
 
 import java.io.IOException;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
+import com.bookstore.controller.frontend.ShoppingCart;
 import com.bookstore.dao.CustomerDao;
 import com.bookstore.dao.OrderDao;
+import com.bookstore.entity.Book;
 import com.bookstore.entity.BookOrder;
+import com.bookstore.entity.Customer;
+import com.bookstore.entity.OrderDetail;
 
 
 public class OrderServices {
@@ -56,4 +63,54 @@ public class OrderServices {
 
 	}
 	
+	
+	public void placeOrder() throws ServletException, IOException {
+		String recipientName = this.request.getParameter("recipientName");
+		String recipientPhone = this.request.getParameter("recipientPhone");
+		String city = this.request.getParameter("city");
+		String country = this.request.getParameter("country");
+		String streetAddress = this.request.getParameter("streetAddress");
+		String zipcode = this.request.getParameter("zipcode");
+		String paymentMethod = this.request.getParameter("paymentMethod");
+		String shippingAddress = city + " " + country + " " + streetAddress;  
+		HttpSession httpSession = this.request.getSession();
+		ShoppingCart shoppingCart = (ShoppingCart) httpSession.getAttribute("shoppingCart");
+		String customerLoggedInEmail = (String) httpSession.getAttribute("customerLoggedIn");
+		Customer customer = new CustomerDao().findByEmail(customerLoggedInEmail);
+				
+		if(shoppingCart != null && customer != null) {
+			BookOrder bookOrder = new BookOrder();
+			bookOrder.setCustomer(new Customer(customer.getCustomerId()));
+			bookOrder.setRecipientName(recipientName);
+			bookOrder.setRecipientPhone(recipientPhone);
+			bookOrder.setPaymentMethod(paymentMethod);
+			bookOrder.setShippingAddress(shippingAddress);
+			
+			Map<Book, Integer> shoppingCartItems = shoppingCart.getCartItems();
+			Iterator<Book> iterator =shoppingCartItems.keySet().iterator();
+			
+			while(iterator.hasNext()) {
+				Book book = iterator.next();
+				Integer quantity = shoppingCartItems.get(book);
+				float subtotal = book.getPrice() * quantity;
+				
+				OrderDetail orderDetail = new OrderDetail();
+				orderDetail.setBook(book);
+				orderDetail.setQuantity(quantity);
+				orderDetail.setSubtotal(subtotal);
+				orderDetail.setBookOrder(bookOrder);
+				
+				bookOrder.getOrderDetails().add(orderDetail);
+			}
+			
+			bookOrder.setTotal(shoppingCart.getTotalAmount());
+			orderDao.create(bookOrder);
+			shoppingCart.clear();
+			
+			this.redirectingServices.redirectTo("frontend/success_checkout.jsp");
+		} 
+		
+		
+		
+	}
 }

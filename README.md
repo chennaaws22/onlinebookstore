@@ -47,6 +47,7 @@
 - 👨‍💼 For loged in customers
 -   ✅ View customer profile and update profile.
 -   ✅ Write a review and and rate a book.
+-   ✅ checkout and place order.
 
 ## Acknowledgements
 - This project was based on [this tutorial](https://bit.ly/3NFR3ZC).

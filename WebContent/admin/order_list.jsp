@@ -49,7 +49,7 @@
 					<td>${bookOrder.status}</td>
 					<td>${bookOrder.orderDate}</td>
 					<td><a class="btn btn-sm btn-primary mb-1 mr-1" href="view_order?orderId=${bookOrder.orderId}">Details</a><a class="btn btn-sm btn-primary mb-1 ml-1" href="edit_book?bookId=${book.bookId}">Edit</a> 
-					<br/><a class="btn btn-sm btn-danger" href="delete_book?orderId=${bookOrder.orderId}" onClick="confirmDelete(${book.bookId})">Delete</a></td>
+					<br/><a class="btn btn-sm btn-danger" href="delete_order?orderId=${bookOrder.orderId}" onClick="confirmDelete(${book.bookId})">Delete</a></td>
 				</tr>
 			</c:forEach>
 		</table>
