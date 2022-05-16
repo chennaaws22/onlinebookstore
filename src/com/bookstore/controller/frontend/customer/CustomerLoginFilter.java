@@ -18,6 +18,7 @@ import javax.servlet.http.HttpSession;
 public class CustomerLoginFilter implements Filter {
 	private static final  String[] requiredUrls = {
 			"update_profile", "view_profile", "write_review", "checkout","place_order"
+			,"view_my_order", "view_my_order_detail"
 	}; 
    
     public CustomerLoginFilter() {

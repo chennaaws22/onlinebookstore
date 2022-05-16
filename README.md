@@ -48,6 +48,7 @@
 -   ✅ View customer profile and update profile.
 -   ✅ Write a review and and rate a book.
 -   ✅ checkout and place order.
+-   ✅ View Customer Order History.
 
 ## Acknowledgements
 - This project was based on [this tutorial](https://bit.ly/3NFR3ZC).

@@ -38,7 +38,7 @@
 	        </li>
 	        
 	         <li class="nav-item">
-	          <a class="nav-link" href="orders">MyOrders</a>
+	          <a class="nav-link" href="view_my_order">MyOrders</a>
 	        </li>
 	        <li class="nav-item">
 	          <a class="nav-link" href="logout">logout</a>

@@ -113,4 +113,45 @@ public class OrderServices {
 		
 		
 	}
+
+	public void viewMyOrder() throws ServletException, IOException {
+		HttpSession httpSession = this.request.getSession();
+		String customerLoggedInEmail = (String) httpSession.getAttribute("customerLoggedIn");
+	
+		Customer customer = new CustomerDao().findByEmail(customerLoggedInEmail);
+		Integer customerId = customer.getCustomerId();
+		List<BookOrder> customerBookOrders = orderDao.listByCustomer(customerId);			
+		this.request.setAttribute("customerBookOrders", customerBookOrders);
+		this.response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+		System.out.println("redirecting to my orders..................");
+		this.redirectingServices.redirectTo("frontend/my_order.jsp");
+		
+	}
+
+	public void viewMyOrderDetail() throws ServletException, IOException {
+		HttpSession httpSession = this.request.getSession();
+		String customerLoggedInEmail = (String) httpSession.getAttribute("customerLoggedIn");
+		int orderId = Integer.parseInt(this.request.getParameter("orderId"));
+		Customer customer = new CustomerDao().findByEmail(customerLoggedInEmail);
+		if(customer == null) {
+			this.redirectingServices.redirectToWithMessage("frontend/message.jsp", "could't find customer with this Id");
+			return;
+		}
+			
+		BookOrder bookOrder = orderDao.getByOrderAndCustomer(orderId, customer.getCustomerId());
+		System.out.println("Found Customer and order with id " + customer.getCustomerId() +" " + orderId);
+		if(bookOrder != null) {
+			System.out.println("Redirecing to order detail page");
+			this.request.setAttribute("bookOrder", bookOrder);
+			this.response.setHeader("Cache-Control", "no-cache, no-store, must-revalidate"); 
+					
+			this.redirectingServices.redirectTo("frontend/my_order_detail.jsp");
+		} else {
+			this.redirectingServices.redirectToWithMessage("frontend/message.jsp", "You must be owner to this order to vie");
+		}
+	
+		
+		
+		
+	}
 }

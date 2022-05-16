@@ -28,6 +28,25 @@ public class OrderDaoTest {
 		orderDao.close();
 	}
 	
+	@Test
+	public void testGetByOrderAndCustomer() {
+		Integer orderId = 36;
+		Integer customerId = 29;
+		
+		BookOrder bookOrder = orderDao.getByOrderAndCustomer(orderId, customerId);
+		
+		assertTrue(bookOrder.getOrderId() == orderId );
+	}
+	
+	@Test
+	public void testGetByOrderAndCustomerNotFound() {
+		Integer orderId = 44;
+		Integer customerId = 29;
+		
+		BookOrder bookOrder = orderDao.getByOrderAndCustomer(orderId, customerId);
+		
+		assertNull(bookOrder );
+	}
 	
 	@Test
 	public void testDeleteBookOrder() {
@@ -131,6 +150,15 @@ public class OrderDaoTest {
 		
 	}
 	
+	
+	@Test
+	public void testListByCustomer() {
+		Integer customerId = 28;
+		List<BookOrder> customerOrders = orderDao.listByCustomer(customerId);
+		
+		assertTrue(customerOrders.size() > 0);
+		
+	}
 	
 
 }
