@@ -13,7 +13,6 @@ public class OrderDao extends JpaDao<BookOrder> implements GenericDao<BookOrder>
 	@Override
 	public BookOrder create(BookOrder bookOrder) {
 		bookOrder.setOrderDate(new Date());
-		bookOrder.setShippingAddress("HomeDelivery");
 		bookOrder.setStatus("processing");
 		return super.create(bookOrder);
 	}

@@ -35,6 +35,7 @@
 -   ✅ Create, delete, update and list Customers.
 -   ✅ delete, update and list customer's Reviews.
 -   ✅ delete and list orders created by customer and it's details.
+-   ✅ edit orders created by customers by adding or deleting books in the customer order.
 
 - 🧑 For website visitors
 -   ✅ Display books by category.

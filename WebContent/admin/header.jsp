@@ -1,5 +1,7 @@
 <%@ taglib prefix = "c" uri = "http://java.sun.com/jsp/jstl/core" %>
-
+<style>
+     <%@ include file="../css/bootstrap.min.css"%>
+</style>	
 
 	
 	<div class="alert alert-success text-center" role="alert">

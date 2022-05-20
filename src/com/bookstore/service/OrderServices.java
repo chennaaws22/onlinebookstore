@@ -1,6 +1,7 @@
 package com.bookstore.service;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -11,12 +12,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.bookstore.controller.frontend.ShoppingCart;
+import com.bookstore.dao.BookDao;
 import com.bookstore.dao.CustomerDao;
 import com.bookstore.dao.OrderDao;
+import com.bookstore.dao.UsersDao;
 import com.bookstore.entity.Book;
 import com.bookstore.entity.BookOrder;
 import com.bookstore.entity.Customer;
 import com.bookstore.entity.OrderDetail;
+import com.bookstore.entity.Users;
 
 
 public class OrderServices {
@@ -150,8 +154,133 @@ public class OrderServices {
 			this.redirectingServices.redirectToWithMessage("frontend/message.jsp", "You must be owner to this order to vie");
 		}
 	
+	}
+
+	public void showEditAdminOrder() throws ServletException, IOException {
+		if(!isAdminLogedIn()) {
+			this.redirectingServices.redirectToWithMessage("/admin/", "please, log in first");
+			return;
+		}
+		
+		Integer orderId = Integer.parseInt(this.request.getParameter("orderId"));
+	
+		
+		HttpSession session = this.request.getSession();
+		Object isPendingAddingBook = session.getAttribute("isNewBookAddedPending");
+		System.out.println("is pending book" + isPendingAddingBook);
+		if(isPendingAddingBook == null) {
+			
+			BookOrder bookOrder = orderDao.get(orderId);
+			if(bookOrder == null) {
+				this.redirectingServices.redirectToWithMessage("message.jsp", "There is no order with this id " + orderId);
+				return;
+			}
+			session.setAttribute("orderInAdmin", bookOrder);	
+			System.out.println("Session book Order added");
+
+		} else {
+			session.removeAttribute("isNewBookAddedPending");
+			System.out.println("removed from session flag");
+
+		}
+		
+		this.redirectingServices.redirectTo("edit_order.jsp");
+	}
+
+	
+	public void editOrderAdmin() throws ServletException, IOException {
+		if(!isAdminLogedIn()) {
+			this.redirectingServices.redirectToWithMessage("/admin/", "please, log in first");
+			return;
+		}	
+		
+		HttpSession session = this.request.getSession();
+		BookOrder bookOrder = (BookOrder) session.getAttribute("orderInAdmin");
+		
+		String recipientName = this.request.getParameter("recipientName");
+		String recipientPhone = this.request.getParameter("recipientPhone");
+		String shippingAddress = this.request.getParameter("shippingAddress");
+		String orderStatus = this.request.getParameter("orderStatus");
+		
+		bookOrder.setRecipientName(recipientName);
+		bookOrder.setRecipientPhone(recipientPhone);
+		bookOrder.setShippingAddress(shippingAddress);
+		bookOrder.setStatus(orderStatus);
+					
+		BookOrder updatedBookOrder = orderDao.update(bookOrder);
+		this.redirectingServices.redirectToWithMessage("/admin/list_order", "Order Updated Successfully");
+			
+	}
+	
+	
+	private boolean isAdminLogedIn() {
+		boolean isAdminLogedIn = false;
+		
+		HttpSession httpSession = this.request.getSession();
+		String adminLoggedInEmail = (String) httpSession.getAttribute("userLogedIn");
+		UsersDao usersDao = new UsersDao();
+		Users admin = usersDao.findByEmail(adminLoggedInEmail);
+		if(admin != null) {
+			isAdminLogedIn = true;
+		}
+		
+		return isAdminLogedIn;
+	}
+
+	public void showAddAdminBookForm() throws ServletException, IOException {
+		BookDao bookDao = new BookDao();
+		List<Book> books = bookDao.listAll();
+		
+		this.request.setAttribute("books", books);
+		
+		this.redirectingServices.redirectTo("admin_add_book_form.jsp");
 		
 		
 		
+	}
+	
+	public void addBookToAdminOrder() throws ServletException, IOException {
+		Integer bookId = Integer.parseInt(this.request.getParameter("book"));
+		Integer quantity = Integer.parseInt(this.request.getParameter("bookQuantity"));
+		
+		BookDao bookDao = new BookDao();
+		Book book = bookDao.get(bookId);
+		
+		
+		BookOrder order = (BookOrder) this.request.getSession().getAttribute("orderInAdmin");
+		
+		OrderDetail orderDetail = new OrderDetail();
+		orderDetail.setBook(book);
+		orderDetail.setQuantity(quantity);
+		orderDetail.setSubtotal(book.getPrice() * quantity);
+		orderDetail.setBookOrder(order);
+		
+		order.setTotal(order.getTotal() + orderDetail.getSubtotal());
+
+		order.getOrderDetails().add(orderDetail);
+		
+		this.request.setAttribute("book", book);
+		this.request.getSession().setAttribute("isNewBookAddedPending", true);
+		this.redirectingServices.redirectTo("order_success.jsp");
+
+		
+	}
+
+	public void removeBookFromAdminOrder() throws ServletException, IOException {
+		Integer bookId = Integer.parseInt(this.request.getParameter("bookId"));
+		
+		BookOrder order = (BookOrder) this.request.getSession().getAttribute("orderInAdmin");
+
+		for(OrderDetail od : order.getOrderDetails()) {
+			if(od.getBook().getBookId() == bookId) {
+				float newTotal = order.getTotal() - od.getSubtotal();
+				order.getOrderDetails().remove(od);
+				order.setTotal(newTotal);
+				
+			}
+		}
+		
+		this.redirectingServices.redirectTo("edit_order.jsp");
+			
 	}
 }

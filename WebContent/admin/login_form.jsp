@@ -8,8 +8,9 @@
 <head>
 <meta charset="ISO-8859-1">
 <title>admin login</title>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+<style>
+     <%@ include file="../css/bootstrap.min.css"%>
+</style>	
 </head>
 <body>
 
@@ -21,7 +22,7 @@
           <form class="card-body cardbody-color p-lg-5" action="login" method="post">
 
             <div class="text-center">
-              <img src="https://cdn.pixabay.com/photo/2016/03/31/19/56/avatar-1295397__340.png" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
+              <img src="https://cdn.pixabay.com/	photo/2016/03/31/19/56/avatar-1295397__340.png" class="img-fluid profile-image-pic img-thumbnail rounded-circle my-3"
                 width="200px" alt="profile">
             </div>
 
