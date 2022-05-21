@@ -49,6 +49,27 @@ public class BookDaoTest{
 	}
 	
 	@Test
+	public void testListBestSellingBooks() {
+		List<Book> books = bookDao.listBestSellingBooks();
+		
+//		for(Book b: books) {
+//			System.out.println(b.getTitle() + " : " + b.getBookId()  );
+//		}
+		assertEquals(4, books.size());
+	}
+	
+	
+	@Test
+	public void testListMostFavoriteBooks() {
+		List<Book> books = bookDao.listMostFavoriteBooks();	
+		
+		for(Book b: books) {
+			System.out.println(b.getTitle() + " : " + b.getBookId()  );
+		}
+		assertEquals(4, books.size());
+	}
+	
+	@Test
 	public void testFindBookByTitle() {
 		String title = "Java 8 in Action: Lambdas, Streams, and functional-style programming";
 		Book book = bookDao.findByTitle(title);

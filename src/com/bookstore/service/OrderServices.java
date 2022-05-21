@@ -1,10 +1,14 @@
 package com.bookstore.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -164,7 +168,6 @@ public class OrderServices {
 		
 		Integer orderId = Integer.parseInt(this.request.getParameter("orderId"));
 	
-		
 		HttpSession session = this.request.getSession();
 		Object isPendingAddingBook = session.getAttribute("isNewBookAddedPending");
 		System.out.println("is pending book" + isPendingAddingBook);
@@ -202,11 +205,43 @@ public class OrderServices {
 		String shippingAddress = this.request.getParameter("shippingAddress");
 		String orderStatus = this.request.getParameter("orderStatus");
 		
+		String[] bookIds = this.request.getParameterValues("bookId");
+		
+		Map<Integer, Integer> bookQuantitesMap = new HashMap<>();
+		
+		for(String bookId: bookIds) {
+			int bookIdInt = Integer.parseInt(bookId);
+			System.out.println("Parsed ID integer " + bookId);
+
+			int bookQuantityInt = Integer.parseInt(this.request.getParameter("bookQuantity"+bookId));
+			System.out.println("Parsed ID integer " + bookQuantityInt);
+
+			bookQuantitesMap.put(bookIdInt, bookQuantityInt);		
+		}
+				
+		float total = 0;
+		Iterator orderDetailsIterator = bookOrder.getOrderDetails().iterator();
+		while(orderDetailsIterator.hasNext()) {
+			OrderDetail orderDetailIterator = (OrderDetail) orderDetailsIterator.next();
+			int bookId = orderDetailIterator.getBook().getBookId();
+			int newQuantity = bookQuantitesMap.get(bookId);
+			orderDetailIterator.setQuantity(newQuantity);
+			
+			float price = orderDetailIterator.getBook().getPrice();
+			
+			float subtotal = newQuantity * price;
+			orderDetailIterator.setSubtotal(subtotal);
+			
+			total += subtotal;
+		}
+		
 		bookOrder.setRecipientName(recipientName);
 		bookOrder.setRecipientPhone(recipientPhone);
 		bookOrder.setShippingAddress(shippingAddress);
 		bookOrder.setStatus(orderStatus);
-					
+		bookOrder.setTotal(total);
+		
+		System.out.println("updating Order.............................");			
 		BookOrder updatedBookOrder = orderDao.update(bookOrder);
 		this.redirectingServices.redirectToWithMessage("/admin/list_order", "Order Updated Successfully");
 			
@@ -246,7 +281,6 @@ public class OrderServices {
 		BookDao bookDao = new BookDao();
 		Book book = bookDao.get(bookId);
 		
-		
 		BookOrder order = (BookOrder) this.request.getSession().getAttribute("orderInAdmin");
 		
 		OrderDetail orderDetail = new OrderDetail();
@@ -262,8 +296,6 @@ public class OrderServices {
 		this.request.setAttribute("book", book);
 		this.request.getSession().setAttribute("isNewBookAddedPending", true);
 		this.redirectingServices.redirectTo("order_success.jsp");
-
-		
 	}
 
 	public void removeBookFromAdminOrder() throws ServletException, IOException {
@@ -276,11 +308,11 @@ public class OrderServices {
 				float newTotal = order.getTotal() - od.getSubtotal();
 				order.getOrderDetails().remove(od);
 				order.setTotal(newTotal);
-				
+				this.redirectingServices.redirectTo("edit_order.jsp");
+				return;
 			}
 		}
 		
-		this.redirectingServices.redirectTo("edit_order.jsp");
-			
+		this.redirectingServices.redirectTo("edit_order.jsp");	
 	}
 }

@@ -23,17 +23,60 @@
 		<c:forEach var="book" items="${books}" varStatus="status">
 		   <c:if test="${status.index % 6 == 0}">
 				<div class="row">
-			</c:if>
-			
+			</c:if>	
 			<div class="col mb-5">
-                        <div class="card h-100">
+                        <div class="card h-100" style="width:14rem;"  >
                             <!-- Product image-->
                          <a href="view_book?book_id=${book.bookId}">   <img class="card-img-top" src="data:image/jpg;base64,${book.base64Image}" /></a>
                             <!-- Product details-->
-                            <div class="card-body p-4">
+                            <div class="card-body p-2 pb-0">
                                 <div class="text-center">
                                     <!-- Product name-->
-                                    <h5 class="fw-bolder">${book.title}</h5>
+                                    <h6 class="fw-bolder">${book.title}</h6>
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning">
+                                        <c:forTokens items="${book.ratingString}" delims="," var="star">
+ 											<c:if test='${star  ne "empty"}'>
+ 												<div class="bi-star-${star}"></div>
+ 										 	</c:if>
+ 										 	<c:if test='${star eq  "empty" }'>
+ 												<div class="bi-star"></div>
+ 											 </c:if>
+ 										</c:forTokens>
+                                    </div>
+                                    <!-- Product price-->
+                                    <fmt:setLocale value = "en_us"/>
+									<fmt:formatNumber value = "${book.price}" type = "currency"/>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-2 pt-0 mt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                	<a class="btn btn-outline-dark mt-auto" href="add_to_cart?bookId=${book.bookId}">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                 </div>
+			
+				<c:if test="${(status.index + 1) % 6 == 0}">
+					</div>
+			    </c:if>
+			</c:forEach>	
+			
+			<h3 class="mb-4"><b>Best-Selling Books</b></h3>
+		<c:forEach var="book" items="${bestSellingsBooks}" varStatus="status">
+		   <c:if test="${status.index % 6 == 0}">
+				<div class="row">
+			</c:if>	
+			<div class="col mb-5">
+                        <div class="card h-100" style="width:14rem;"  >
+                            <!-- Product image-->
+                         <a href="view_book?book_id=${book.bookId}">   <img class="card-img-top" src="data:image/jpg;base64,${book.base64Image}" /></a>
+                            <!-- Product details-->
+                            <div class="card-body p-2 pb-0">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h6 class="fw-bolder">${book.title}</h6>
                                     <!-- Product reviews-->
                                     <div class="d-flex justify-content-center small text-warning mb-2">
                                         <c:forTokens items="${book.ratingString}" delims="," var="star">
@@ -62,8 +105,50 @@
 				<c:if test="${(status.index + 1) % 6 == 0}">
 					</div>
 			    </c:if>
-			</c:forEach>	
-		
+			</c:forEach>
+			<h3 class="mb-4"><b>Most-Favorite Books</b></h3>
+		<c:forEach var="book" items="${mostFavoriteBooks}" varStatus="status">
+		   <c:if test="${status.index % 6 == 0}">
+				<div class="row">
+			</c:if>	
+			<div class="col mb-5">
+                        <div class="card h-100" style="width:14rem;"  >
+                            <!-- Product image-->
+                         <a href="view_book?book_id=${book.bookId}">   <img class="card-img-top" src="data:image/jpg;base64,${book.base64Image}" /></a>
+                            <!-- Product details-->
+                            <div class="card-body p-2 pb-0">
+                                <div class="text-center">
+                                    <!-- Product name-->
+                                    <h6 class="fw-bolder">${book.title}</h6>
+                                    <!-- Product reviews-->
+                                    <div class="d-flex justify-content-center small text-warning mb-2">
+                                        <c:forTokens items="${book.ratingString}" delims="," var="star">
+ 											<c:if test='${star  ne "empty"}'>
+ 												<div class="bi-star-${star}"></div>
+ 										 	</c:if>
+ 										 	<c:if test='${star eq  "empty" }'>
+ 												<div class="bi-star"></div>
+ 											 </c:if>
+ 										</c:forTokens>
+                                    </div>
+                                    <!-- Product price-->
+                                    <fmt:setLocale value = "en_us"/>
+									<fmt:formatNumber value = "${book.price}" type = "currency"/>
+                                </div>
+                            </div>
+                            <!-- Product actions-->
+                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                <div class="text-center">
+                                	<a class="btn btn-outline-dark mt-auto" href="add_to_cart?bookId=${book.bookId}">Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                 </div>
+			
+				<c:if test="${(status.index + 1) % 6 == 0}">
+					</div>
+			    </c:if>
+			</c:forEach>
 		</div>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
 </body>

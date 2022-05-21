@@ -38,7 +38,12 @@ import javax.persistence.UniqueConstraint;
 		@NamedQuery(name = "Book.search", query = "SELECT b FROM Book b WHERE b.title"
 				+ " LIKE '%' || :keyword || '%'"
 				+ "OR b.author LIKE '%' || :keyword||'%'"),
-		@NamedQuery(name = "Book.countByCategory", query = "SELECT count(*) FROM Book b WHERE b.category.categoryId = :catId")
+		@NamedQuery(name = "Book.countByCategory", query = "SELECT count(*) FROM Book b WHERE b.category.categoryId = :catId"),
+		@NamedQuery(name = "Book.bestSelling", query = "SELECT od.book FROM OrderDetail od GROUP BY od.book.bookId ORDER BY SUM(od.quantity) DESC"),
+		@NamedQuery(name = "Book.mostFavorite", query = "SELECT r.book FROM Review r " 
+													+ "GROUP BY r.book.bookId HAVING AVG(r.rating) >= 3.8 " 
+													+ "ORDER BY COUNT(r.book.bookId) DESC, AVG(r.rating) DESC")
+
 		
 })
 
