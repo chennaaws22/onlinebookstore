@@ -45,7 +45,12 @@
 		    <version>4.0.1</version>
 		    <scope>provided</scope>
 		</dependency>
-
+               <dependency>
+                  <groupId>junit</groupId>
+                  <artifactId>junit-dep</artifactId>
+                  <version>4.8.2</version>
+                  <scope>test</scope>
+               </dependency>
 	  	<dependency>
 	    	<groupId>javax.servlet.jsp</groupId>
 	    	<artifactId>jsp-api</artifactId>
